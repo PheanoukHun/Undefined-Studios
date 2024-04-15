@@ -47,7 +47,8 @@ class Sprite:
     self.sprite_image = pygame.transform.flip(self.sprite_image, False, boolean)
   
   def add_object(self):
-    self.window.blit(self.sprite_image, (self.sprite_rect.x, self.sprite_rect.y))
+    _window = self.window
+    _window.blit(self.sprite_image, (self.sprite_rect.x, self.sprite_rect.y))
 
   def move_x_units(self, speed):
     self.speed_x = speed
@@ -80,3 +81,46 @@ class TextLabel(Sprite):
   def change_color(self, color):
     self.text_label = self.font.render(self.text, 1, color)
     self.window.blit(self.text_label, (self.x, self.y))
+
+if __name__ == "__main__":
+
+    _width, _height = (1018, 573)
+    _character_width, _character_height = (60, 60)
+
+    _clock = pygame.time.Clock()
+    pygame.display.set_caption("Forgotten Frontiers")
+
+    _FPS = 30
+    _VEL = 5
+
+    _CHARACTER_HIT = pygame.USEREVENT + 1
+    _MOB_HIT = pygame.USEREVENT + 2
+
+    _run = True
+
+    _color_constants = {
+    "Black": (0, 0, 0),
+    "White": (255, 255, 255),
+    "Red": (255, 0, 0),
+    "Green": (0, 255, 0),
+    "Blue": (0, 0, 255),
+    "Yellow": (255, 255, 0),
+    "Purple": (128, 0, 128),
+    "Orange": (255, 165, 0)}
+
+    _window = pygame.display.set_mode((_width, _height))
+
+    _character = Sprite(100, 100, _character_width, _character_height, 
+                        "assets\pixel_knight (1).png", 
+                        _window)
+
+    def draw_window(character):
+       _window.blit(character)
+
+    while _run:
+        _clock.tick(_FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        draw_window(_character)
