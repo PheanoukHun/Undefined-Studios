@@ -115,7 +115,7 @@ if __name__ == "__main__":
                         _window)
 
     def draw_window(character):
-       _window.blit(character)
+       _window.blit(character.sprite_image)
 
     while _run:
         _clock.tick(_FPS)
