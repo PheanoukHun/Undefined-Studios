@@ -80,6 +80,7 @@ class Sprite:
 class AnimatedSprites(Sprite):
     def __init__(self, x, y, width, height, images, window):
        super.__init__(x, y, width, height, images[0], window)
+    
     def update_animation(self):
       # Update animation frame based on time elapsed
       current_time = pygame.time.get_ticks()
@@ -87,6 +88,8 @@ class AnimatedSprites(Sprite):
           self.image_index = (self.image_index + 1) % len(self.images)
           self.sprite_image = pygame.transform.scale(pygame.image.load(self.images[self.image_index]), (self.width, self.height))
           self.last_update_time = current_time
+
+    def draw(self):   
 
 class TextLabel(Sprite):
   
@@ -141,7 +144,7 @@ if __name__ == "__main__":
     _window = pygame.display.set_mode((_width, _height))
 
     _character = Sprite(100, 100, _character_width, _character_height, 
-                        "assets\pixel_knight (1).png", 
+                        "assets\pixel_knight.png", 
                         _window)
 
     def draw_window(character):
