@@ -22,7 +22,7 @@ class Sprite:
         self.is_flipped_x = False
         self.is_flipped_y = False
         
-        self.sprite_image = pygame.image.load(image)
+        self.sprite_image = pygame.transform.scale(pygame.image.load(image), (width, height))
         self.sprite_rect = pygame.Rect(x, y, width, height)
 
     def scale(self, width, height):
@@ -121,7 +121,7 @@ class TextLabel(Sprite):
 if __name__ == "__main__":
 
     _width, _height = (1018, 573)
-    _character_width, _character_height = (60, 60)
+    _character_width, _character_height = (150, 150)
 
     _clock = pygame.time.Clock()
     pygame.display.set_caption("Forgotten Frontiers")
@@ -151,13 +151,13 @@ if __name__ == "__main__":
                         _window)
 
     def handle_character_movement(keys_pressed, character):
-        if keys_pressed[pygame.K_a] and character.sprite_rect.x - 5 > 0:
+        if keys_pressed[pygame.K_a] and character.sprite_rect.x - 5 >= 0:
             character.move_x_units(-5)
         if keys_pressed[pygame.K_d] and character.sprite_rect.x + 5 + character.width < _width:
             character.move_x_units(5)
         if keys_pressed[pygame.K_w] and character.sprite_rect.y - 5> 0:
             character.move_y_units(-5)
-        if keys_pressed[pygame.K_s] and character.sprite_rect.x + 5 + character.height < _height:
+        if keys_pressed[pygame.K_s] and character.sprite_rect.y + 5 + character.height < _height:
             character.move_y_units(5)
         
     def draw_window(character):
