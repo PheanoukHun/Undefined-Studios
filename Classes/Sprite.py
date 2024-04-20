@@ -23,7 +23,7 @@ class Sprite:
         self.is_flipped_y = False
         
         self.sprite_image = pygame.transform.scale(pygame.image.load(image), (width, height))
-        self.sprite_rect = pygame.Rect(x, y, width, height)
+        self.sprite_rect = self.sprite_image.get_rect()
 
     def scale(self, width, height):
         
