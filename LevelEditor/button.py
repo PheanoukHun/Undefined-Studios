@@ -27,8 +27,8 @@ class Button():
         self.rect.topleft = (self.x, self.y)
 
     def draw(self, window):
-        pos = pygame.mouse.get_pos()
         action = False
+        pos = pygame.mouse.get_pos()
 
         if self.rect.collidepoint(pos):
             if pygame.mouse.get_pressed()[0] and not self.clicked:
