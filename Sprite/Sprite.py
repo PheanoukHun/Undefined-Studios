@@ -147,7 +147,7 @@ if __name__ == "__main__":
     _window = pygame.display.set_mode((_width, _height))
 
     _character = Sprite(100, 100, _character_width, _character_height,
-                        "assets\pixel_knight.png",
+                        "PixelCharacters\pixel_knight.png",
                         _window)
 
     def handle_character_movement(keys_pressed, character):
