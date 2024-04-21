@@ -166,7 +166,7 @@ class Sprite:
         self.sprite_rect.y += self.speed_y
         self.window.blit(self.sprite_image, self.sprite_rect.topleft)
 
-class AnimatedSprites():
+class AnimatedSprites(Sprite):
 
     # Initilization Function
 
