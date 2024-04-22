@@ -7,7 +7,7 @@ class Button():
         self.x = x
         self.y = y
 
-        self.image = pygame.image.load(image)
+        self.image = pygame.image.load(image).convert_alpha()
 
         self.width = self.image.get_width()
         self.height = self.image.get_height()
