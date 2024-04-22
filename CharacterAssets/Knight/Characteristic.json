@@ -1,0 +1,23 @@
+{
+    "Idle" : {
+        "North" : [],
+        "South" : [],
+        "East" : [],
+        "West" : []
+    },
+
+    "Walking" : {
+        "VEL" : 5,
+        "North" : [],
+        "South" : [],
+        "East" : [],
+        "West" : []
+    },
+
+    "Slashing" : {
+        "North" : [],
+        "South" : [],
+        "East" : [],
+        "West" : []
+    }
+}
