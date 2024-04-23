@@ -1,8 +1,10 @@
 {
+    "Health": 25,
+    "AttackDamage" : 5,
     "ShieldUp" : {
         "VEL" : 0,
         "AnimationSteps" : 5,
-        "AnimationSpeed": 250,
+        "AnimationSpeed": 125,
         "Height" : 64,
         "Width" : 64,
         "North" : [],
@@ -14,18 +16,18 @@
     "Walking" : {
         "VEL" : 5,
         "AnimationSteps" : 5,
-        "AnimationSpeed": 250,
+        "AnimationSpeed": 125,
         "Height" : 64,
         "Width" : 64,
-        "North" : ["CharacterAssets\\Knight\\KnightWalkingUp.png"],
-        "South" : ["CharacterAssets\\Knight\\KnightWalkingDown.png"],
-        "East" : ["CharacterAssets\\Knight\\KnightWalkingRight.png"],
-        "West" : ["CharacterAssets\\Knight\\KnightWalkingLeft.png"]
+        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
     },
 
     "Idle" : {
-        "VEL" : 5,
-        "AnimationSteps" : 5,
+        "VEL" : 0,
+        "AnimationSteps" : 1,
         "AnimationSpeed": 1000000000000,
         "Height" : 64,
         "Width" : 64,
@@ -38,8 +40,8 @@
     "Slashing" : {
         "VEL" : 0,
         "AnimationSteps" : 5,
-        "AnimationSpeed": 250,
-        "Height" : 69,
+        "AnimationSpeed": 125,
+        "Height" : 64,
         "Width" : 140,
         "North" : [],
         "South" : [],
