@@ -1,0 +1,49 @@
+{
+    "ShieldUp" : {
+        "VEL" : 0,
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 250,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : [],
+        "South" : [],
+        "East" : [],
+        "West" : []
+    },
+
+    "Walking" : {
+        "VEL" : 5,
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 250,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : ["CharacterAssets\\Knight\\KnightWalkingUp.png"],
+        "South" : ["CharacterAssets\\Knight\\KnightWalkingDown.png"],
+        "East" : ["CharacterAssets\\Knight\\KnightWalkingRight.png"],
+        "West" : ["CharacterAssets\\Knight\\KnightWalkingLeft.png"]
+    },
+
+    "Idle" : {
+        "VEL" : 5,
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 1000000000000,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
+    },
+
+    "Slashing" : {
+        "VEL" : 0,
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 250,
+        "Height" : 69,
+        "Width" : 140,
+        "North" : [],
+        "South" : [],
+        "East" : [],
+        "West" : []
+    }
+}
