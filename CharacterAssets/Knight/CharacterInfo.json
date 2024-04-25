@@ -27,8 +27,8 @@
 
     "Idle" : {
         "VEL" : 0,
-        "AnimationSteps" : 1,
-        "AnimationSpeed": 1000000000000,
+        "AnimationSteps" : 2,
+        "AnimationSpeed": 250,
         "Height" : 64,
         "Width" : 64,
         "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
@@ -43,9 +43,9 @@
         "AnimationSpeed": 125,
         "Height" : 64,
         "Width" : 140,
-        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
-        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
-        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
-        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
+        "North" : "CharacterAssets\\Knight\\KnightSwingUp.png",
+        "South" : "CharacterAssets\\Knight\\KnightSwingDown.png",
+        "East" : "CharacterAssets\\Knight\\KnightSwingRight.png",
+        "West" : "CharacterAssets\\Knight\\KnightSwingLeft.png"
     }
 }

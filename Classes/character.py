@@ -15,6 +15,10 @@ class Player():
 
         self.health = self.data["Health"]
         self.attack_damage = self.data["AttackDamage"]
+        
+        self.previous_state = "Idle"
+        self.previous_direction = "North"
+        
         self.state = "Walking"
         self.direction = "East"
         
@@ -101,28 +105,32 @@ class Player():
         else:
             self.y_speed = 0
 
+        if keys_pressed[pygame.K_RCTRL]:
+            self.state = "ShieldUp"
+
         if keys_pressed[pygame.K_UP]:
             self.state = "Attack"
             self.direction = "North"
-            # Handle attack logic here
+            
         elif keys_pressed[pygame.K_DOWN]:
             self.state = "Attack"
             self.direction = "South"
-            # Handle attack logic here
+            
         elif keys_pressed[pygame.K_LEFT]:
             self.state = "Attack"
             self.direction = "West"
-            # Handle attack logic here
+            
         elif keys_pressed[pygame.K_RIGHT]:
             self.state = "Attack"
             self.direction = "East"
-            # Handle attack logic here
-
+        
         if not any(keys_pressed):
             self.state = "Idle"
-        self.update_info()
-        #self.x_speed = self.VEL * directions[self.direction][0]
-        #self.y_speed = self.VEL * directions[self.direction][1]
+        
+        if self.state != self.previous_state or self.previous_direction != self.direction:
+            self.previous_state = self.state
+            self.previous_direction = self.direction
+            self.update_info()
     
     def draw(self, event):
         self.handle_character_states(event)
