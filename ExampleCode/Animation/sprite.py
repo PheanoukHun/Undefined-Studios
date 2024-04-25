@@ -207,6 +207,7 @@ class AnimatedSprite(Sprite):
         
         self.frames = [i for i in range(value)]
 
+
     # Update the sprite image
 
     def update(self):

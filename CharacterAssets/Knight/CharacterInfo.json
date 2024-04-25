@@ -7,10 +7,10 @@
         "AnimationSpeed": 125,
         "Height" : 64,
         "Width" : 64,
-        "North" : [],
-        "South" : [],
-        "East" : [],
-        "West" : []
+        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
     },
 
     "Walking" : {
@@ -37,15 +37,15 @@
         "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
     },
 
-    "Slashing" : {
+    "Attack" : {
         "VEL" : 0,
         "AnimationSteps" : 5,
         "AnimationSpeed": 125,
         "Height" : 64,
         "Width" : 140,
-        "North" : [],
-        "South" : [],
-        "East" : [],
-        "West" : []
+        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
     }
 }
