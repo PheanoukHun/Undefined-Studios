@@ -7,7 +7,7 @@ pygame.init()
 
 class Player():
     def __init__(self, player_type, window, screen_width, screen_height, x, y):
-        with open(f"CharacterAssets\{player_type}\CharacterInfo.json") as json_file:
+        with open(f"CharacterAssets\\{player_type}\\CharacterInfo.json") as json_file:
             self.data = json.load(json_file)
 
         self.speed_x = 0
