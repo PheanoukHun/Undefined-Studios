@@ -156,8 +156,13 @@ while run:
     # Draw Scene
 
     draw_BG()
-    draw_grid()
+    draw_grid()    
     draw_world()
+
+    # Draw Tile Panel and Titles
+
+    pygame.draw.rect(screen, GREEN, (0, SCREEN_HEIGHT, SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
+    pygame.draw.rect(screen, GREEN, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
 
     # Draws the Texts
 
@@ -191,10 +196,7 @@ while run:
         world_data = pickle.load(pickle_in)
         pickle_in.close()"""
 
-    # Draw Tile Panel and Titles
-
-    pygame.draw.rect(screen, GREEN, (0, SCREEN_HEIGHT, SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
-    pygame.draw.rect(screen, GREEN, (SCREEN_WIDTH, 0, SIDE_MARGIN, SCREEN_HEIGHT))
+    
 
     # Choose a Tile
     button_count = 0
