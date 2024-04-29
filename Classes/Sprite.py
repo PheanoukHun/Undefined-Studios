@@ -3,11 +3,12 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-class Sprite:
+class Sprite (pygame.sprite.Sprite):
 
     # Initilization Function
 
     def __init__(self, x, y, image, window):
+        pygame.sprite.Sprite.__init__(self)
         self.sprite_image = pygame.image.load(image).convert_alpha()
         self.width = self.sprite_image.get_width()
         self.height = self.sprite_image.get_height()
@@ -79,10 +80,10 @@ class Sprite:
 
     @scale.setter
     def scale(self, value):
-        if isinstance(value, (int, float)):
-            self._scale = value
-            self.width = int(self.sprite_image.get_width() * value)
-            self.height = int(self.sprite_image.get_height() * value)
+        self._scale = value
+        self.width = int(self.sprite_image.get_width() * value)
+        self.height = int(self.sprite_image.get_height() * value)
+        self.sprite_image = pygame.transform.scale(self.sprite_image, (self.width, self.height))
 
     # Rotation Property and Setter
 
@@ -94,6 +95,7 @@ class Sprite:
     def rotate(self, angle):
         if isinstance(angle, int):
             self.angle = angle
+            self.sprite_image = pygame.transform.rotate(self.sprite_image, self.angle)
 
     # Image Property and Setter
 
@@ -150,6 +152,18 @@ class Sprite:
         if isinstance(value, (int, float)):
             self.speed_y = value
 
+    # Collision detection method
+    def collide_with(self, other_sprite):
+        
+        if self.sprite_rect.colliderect(other_sprite.sprite_rect):
+            self_mask = pygame.mask.from_surface(self.sprite_image)
+            other_mask = pygame.mask.from_surface(other_sprite.sprite_image)
+
+            if self_mask.overlap(other_mask, other_sprite.sprite_rect.topleft):
+                return True
+
+        return self.sprite_rect.colliderect(other_sprite.sprite_rect)
+
     # Function Used to Update Transformations
 
     def update_transform(self):
@@ -160,9 +174,8 @@ class Sprite:
 
     #Function used to draw the Sprite
 
-    def draw(self):
-        self.sprite_rect.x += self.speed_x
-        self.sprite_rect.y += self.speed_y
+    def draw(self, horizontal_scroll = 0, vertical_scroll = 0):
+        self.sprite_rect.move_ip(self.speed_x + horizontal_scroll, self.speed_y + vertical_scroll)
         self.window.blit(self.sprite_image, self.sprite_rect.topleft)
 
 class SpriteSheet:
@@ -241,7 +254,6 @@ class TextLabel(Sprite):
         self._font_type = font
         self._font_size = size
         self._update_text()
-
 
     # Text Properties
     @property
