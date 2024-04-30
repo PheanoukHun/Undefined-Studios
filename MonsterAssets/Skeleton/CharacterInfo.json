@@ -1,0 +1,50 @@
+{
+    "Health": 20,
+    "AttackDamage" : 7,
+    "VEL" : 5,
+
+    "Walking" : {
+        
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "MonsterAssets\\Skeleton\\SkeletonWalkingUp.png",
+        "South" : "MonsterAssets\\Skeleton\\SkeletonWalkingDown.png",
+        "East" : "MonsterAssets\\Skeleton\\SkeletonWalkingRight.png",
+        "West" : "MonsterAssets\\Skeleton\\SkeletonWalkingLeft.png"
+    },
+
+    "Idle" : {
+        "AnimationSteps" : 1,
+        "AnimationSpeed": 250,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "MonsterAssets\\Skeleton\\SkeletonWalkingUp.png",
+        "South" : "MonsterAssets\\Skeleton\\SkeletonWalkingDown.png",
+        "East" : "MonsterAssets\\Skeleton\\SkeletonWalkingRight.png",
+        "West" : "MonsterAssets\\Skeleton\\SkeletonWalkingLeft.png"
+    },
+
+    "Hurt" : {
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "MonsterAssets\\Skeleton\\SkeletonDead.png",
+        "South" : "MonsterAssets\\Skeleton\\SkeletonDead.png",
+        "East" : "MonsterAssets\\Skeleton\\SkeletonDead.png",
+        "West" : "MonsterAssets\\Skeleton\\SkeletonDead.png"
+    },
+
+    "Attack" : {
+        "AnimationSteps" : 6,
+        "AnimationSpeed": 125,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "MonsterAssets\\Skeleton\\SkeletonShootingUp.png",
+        "South" : "MonsterAssets\\Skeleton\\SkeletonShootingDown.png",
+        "East" : "MonsterAssets\\Skeleton\\SkeletonShootingRight.png",
+        "West" : "MonsterAssets\\Skeleton\\SkeletonShootingLeft.png"
+    }
+}

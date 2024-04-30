@@ -1,0 +1,50 @@
+{
+    "Health": 20,
+    "AttackDamage" : 7,
+    "VEL" : 5,
+
+    "Walking" : {
+        
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 16,
+        "Width" : 18,
+        "North" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "South" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "East" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "West" : "MonsterAssets\\Slime\\BouncingSpritesheet.png"
+    },
+
+    "Idle" : {
+        "AnimationSteps" : 1,
+        "AnimationSpeed": 250,
+        "Height" : 16,
+        "Width" : 18,
+        "North" : "MonsterAssets\\Slime\\IdleSpritesheet.png",
+        "South" : "MonsterAssets\\Slime\\IdleSpritesheet.png",
+        "East" : "MonsterAssets\\Slime\\IdleSpritesheet.png",
+        "West" : "MonsterAssets\\Slime\\IdleSpritesheet.png"
+    },
+
+    "Hurt" : {
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 16,
+        "Width" : 18,
+        "North" : "MonsterAssets\\Slime\\DeathSpritesheet.png",
+        "South" : "MonsterAssets\\Slime\\DeathSpritesheet.png",
+        "East" : "MonsterAssets\\Slime\\DeathSpritesheet.png",
+        "West" : "MonsterAssets\\Slime\\DeathSpritesheet.png"
+    },
+
+    "Attack" : {
+        "AnimationSteps" : 6,
+        "AnimationSpeed": 125,
+        "Height" : 16,
+        "Width" : 18,
+        "North" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "South" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "East" : "MonsterAssets\\Slime\\BouncingSpritesheet.png",
+        "West" : "MonsterAssets\\Slime\\BouncingSpritesheet.png"
+    }
+}

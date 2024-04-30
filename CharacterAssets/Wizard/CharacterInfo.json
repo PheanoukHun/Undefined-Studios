@@ -1,0 +1,50 @@
+{
+    "Health": 20,
+    "AttackDamage" : 7,
+    "VEL" : 5,
+
+    "Walking" : {
+        
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
+        "South" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
+        "East" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
+        "West" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png"
+    },
+
+    "Idle" : {
+        "AnimationSteps" : 1,
+        "AnimationSpeed": 250,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
+        "South" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
+        "East" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
+        "West" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png"
+    },
+
+    "Hurt" : {
+        "AnimationSteps" : 5,
+        "AnimationSpeed": 125,
+        "Height" : 64,
+        "Width" : 64,
+        "North" : "CharacterAssets\\Wizard\\WizardDead.png",
+        "South" : "CharacterAssets\\Wizard\\WizardDead.png",
+        "East" : "CharacterAssets\\Wizard\\WizardDead.png",
+        "West" : "CharacterAssets\\Wizard\\WizardDead.png"
+    },
+
+    "Attack" : {
+        "AnimationSteps" : 6,
+        "AnimationSpeed": 125,
+        "Height" : 100,
+        "Width" : 64,
+        "North" : "CharacterAssets\\Wizard\\WizardMagicUp.png",
+        "South" : "CharacterAssets\\Wizard\\WizardMagicDown.png",
+        "East" : "CharacterAssets\\Wizard\\WizardMagicRight.png",
+        "West" : "CharacterAssets\\Wizard\\WizardMagicLeft.png"
+    }
+}
