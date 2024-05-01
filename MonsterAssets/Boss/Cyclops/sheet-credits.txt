@@ -1,0 +1,41 @@
+Authors: drjamgo@hotmail.com, bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sj?lund (wulax), Stephen Challener (Redshrike), Matthew Krohn (makrohn), Zi Ye, kirts, JaidynReiman, Marcel van de Steeg (MadMarcel), Nila122, Johannes Sjölund (wulax), , Pierre Vigier (pvigier), Tuomo Untinen (reemax), and Inboxninja
+
+- shadow/adult/shadow.png: by drjamgo@hotmail.com. License(s): CC0. 
+    - https://opengameart.org/content/shadow-for-lpc-sprite
+
+- body/bodies/male/olive.png: by bluecarrot16, Benjamin K. Smith (BenCreating), Evert, Eliza Wyatt (ElizaWy), TheraHedwig, MuffinElZangano, Durrani, Johannes Sj?lund (wulax), Stephen Challener (Redshrike). License(s): CC-BY-SA 3.0, GPL 3.0. see details at https://opengameart.org/content/lpc-character-bases
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/lpc-male-jumping-animation-by-durrani
+    - https://opengameart.org/content/lpc-runcycle-and-diagonal-walkcycle
+    - https://opengameart.org/content/lpc-revised-character-basics
+
+- head/heads/orc_male/universal/olive.png: by bluecarrot16, Matthew Krohn (makrohn), Stephen Challener (Redshrike), Zi Ye. License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/four-characters-my-lpc-entries
+    - https://opengameart.org/content/sinbad-the-ogre
+    - https://opengameart.org/content/lpc-male-sheets
+    - https://opengameart.org/content/lpc-character-bases
+
+- eyes/male/cyclope.png: by kirts. License(s): CC0. 
+    - https://opengameart.org/content/cyclops-and-his-eye
+
+- torso/clothes/sleeveless/male/leather.png: by bluecarrot16, Matthew Krohn (makrohn), JaidynReiman, Marcel van de Steeg (MadMarcel), Nila122, Johannes Sjölund (wulax), Stephen Challener (Redshrike). License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-female-orcogregoblintroll-base-walkcycle
+    - https://opengameart.org/content/lpc-curly-hair-elven-ears-white-cape-with-blue-trim-and-more
+    - https://opengameart.org/content/more-lpc-clothes-and-hair
+    - https://opengameart.org/content/lpc-pirates
+
+- torso/aprons/apron/male/leather.png: by Nila122. License(s): CC-BY-SA 3.0, GPL 2.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-aprons
+
+- legs/pantaloons/male/leather.png: by Nila122, Johannes Sjölund (wulax), Stephen Challener (Redshrike). License(s): OGA-BY 3.0, CC-BY-SA 3.0,, GPL 2.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-pirates
+    - https://opengameart.org/content/more-lpc-clothes-and-hair
+
+- tools/smash/universal/male/axe.png: by . License(s): . !MISSING LICENSE INFORMATION! PLEASE CORRECT MANUALY AND REPORT BACK VIA A GITHUB ISSUE
+
+- tools/smash/background/axe.png: by bluecarrot16, Pierre Vigier (pvigier), Tuomo Untinen (reemax), Johannes Sjölund (wulax), and Inboxninja. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-hand-tools
+
+- tools/smash/foreground/axe.png: by bluecarrot16, Pierre Vigier (pvigier), Tuomo Untinen (reemax), Johannes Sjölund (wulax), and Inboxninja. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-hand-tools
