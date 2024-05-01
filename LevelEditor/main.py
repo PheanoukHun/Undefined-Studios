@@ -156,7 +156,7 @@ while run:
     # Draw Scene
 
     draw_BG()
-    draw_grid()    
+    draw_grid()
     draw_world()
 
     # Draw Tile Panel and Titles
