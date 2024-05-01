@@ -2,7 +2,7 @@ import pygame
 import json
 import random
 import math
-from sprite import AnimatedSprite, Sprite
+from classes.sprite import AnimatedSprite, Sprite
 
 pygame.init()
 
@@ -419,6 +419,33 @@ class Mob(Entity):
 
         for wall in walls:
             self.walls_group.add(wall)
+
+    def handle_character_states(self):
+        states = ["Walking", "Idle"]
+        directions = ["North", "West", "East", "South"]
+
+        self.previous_state = self.direction
+        self.previous_state = self.state
+
+        self.state = random.choice(states)
+        self.direction = random.choice(directions)
+
+        if self.state == "Walking":
+            if self.direction == "West":
+                self.x_speed = -self.VEL
+            elif self.direction == "East":
+                self.x_speed = self.VEL
+            else:
+                self.x_speed = 0
+
+            if self.direction == "North":
+                self.y_speed = -self.VEL
+            elif self.direction == "South":
+                self.y_speed = self.VEL
+            else:
+                self.y_speed = 0
+
+        self.update_info()
 
     def track_player(self):
         x_difference = self.sprite.x - self.player.sprite.x

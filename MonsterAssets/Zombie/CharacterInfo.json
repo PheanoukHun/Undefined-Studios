@@ -1,7 +1,7 @@
 {
     "Health": 20,
     "AttackDamage" : 7,
-    "VEL" : 5,
+    "VEL" : 3,
 
     "Walking" : {
         

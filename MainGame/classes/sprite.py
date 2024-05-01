@@ -249,11 +249,7 @@ class TextLabel(Sprite):
 
     #Initiation Function
     def __init__(self, text, x, y, color, window, font, size):
-        self.x = x
-        self.y = y
-
-        self.window = window
-        
+        super().__init__(x, y, "", window)
         self._text = text
         self._color = color
         self._font_type = font
