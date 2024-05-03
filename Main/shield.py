@@ -2,7 +2,7 @@ import pygame
 import json
 import random
 import math
-from classes.sprite import AnimatedSprite, Sprite
+from sprite import AnimatedSprite, Sprite
 
 pygame.init()
 
@@ -44,7 +44,6 @@ class Entity():
         self.window_width, self.window_height = window.get_size()
 
         self.projectiles = pygame.sprite.Group()
-        self.resistance = random.randint(0,2)
 
         self.sprite = AnimatedSprite(x, y, self.width, self.height, self.data[self.state][self.direction], self.window, self.frame, self.data[self.state]["AnimationSpeed"])
 
@@ -72,51 +71,41 @@ class Entity():
         self.sprite.speed_y = value
         self.speed_y = value
 
-    def shoot(self, angle, image = "OtherAssets\\ArrowSprite.png"):
-
-        current_time = pygame.time.get_ticks()
-
-        if current_time - self.last_attack_animation_start > self.attack_animation_time:
-            if self.direction == "North":
-                arrow = Projectile(self.sprite.x + self.width // 2, self.sprite.y + 10, angle, self.window, image)
-            if self.direction == "South":
-                arrow = Projectile(self.sprite.x + self.width // 2, self.sprite.y + self.height + 10, angle, self.window, image)
-
-            if self.direction == "West":
-                arrow = Projectile(self.sprite.x + 10, self.sprite.y + self.height // 2 , angle, self.window, image)
-            if self.direction == "East":
-                arrow = Projectile(self.sprite.x + 10 + self.width, self.sprite.y + self.height // 2 , angle, self.window, image)
-            
-            self.projectiles.add(arrow)
-            self.last_attack_animation_start = current_time
-
     def update_info(self):
+
+        if self.state == "Idle":
+            self.x_speed = 0
+            self.y_speed = 0
+
         self.previous_state = self.state
         self.previous_direction = self.direction
-        
         self.image = self.data[self.state][self.direction]
         self.frame = self.data[self.state]["AnimationSteps"]
         self.animation_time = self.data[self.state]["AnimationSpeed"]
-        
         self.update_sprite_actions()
 
     def update_sprite_actions(self):
-
-        x = self.sprite.x
-        y = self.sprite.y
-
-        self.width = self.data[self.state]["Width"]
-        self.height = self.data[self.state]["Height"]
-        
+        x, y = self.sprite.x, self.sprite.y
+        self.width, self.height = self.data[self.state]["Width"], self.data[self.state]["Height"]
         self.sprite = AnimatedSprite(x, y, self.width, self.height, self.image, self.window, self.frame, self.animation_time)
-        self.x_speed = self.speed_x
-        self.y_speed = self.speed_y
+        self.x_speed, self.y_speed = self.speed_x, self.speed_y
+
+    def shoot(self, angle, image="OtherAssets\\ArrowSprite.png"):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_attack_animation_start > self.attack_animation_time:
+            if self.direction in ("North", "South"):
+                start_x = self.sprite.x + self.width // 2
+                start_y = self.sprite.y + (10 if self.direction == "North" else self.height + 10)
+            else:
+                start_x = self.sprite.x + 10 if self.direction == "West" else self.sprite.x + 10 + self.width
+                start_y = self.sprite.y + self.height // 2
+            arrow = Projectile(start_x, start_y, angle, self.window, image)
+            self.projectiles.add(arrow)
+            self.last_attack_animation_start = current_time
 
     def hurt(self, damage_amount):
-        
         reduced = int(damage_amount * (1/self.resistance))
         self.health -= damage_amount - reduced
-
         if self.health <= 0:
             self.state = "Hurt"
             self.death = True
@@ -133,7 +122,7 @@ class Entity():
 
 class Player(Entity):
 
-    def __init__(self, player_type, window, x, y):
+    def __init__(self, player_type, window, x, y, walls):
         
         with open(f"CharacterAssets\\{player_type}\\CharacterInfo.json") as json_file:
             data = json.load(json_file)
@@ -142,6 +131,7 @@ class Player(Entity):
         
         self.last_shield_ended = -10000
         self.shield = None
+        self.walls = walls
 
         self.player_type = player_type
 
@@ -186,6 +176,22 @@ class Player(Entity):
         else:
             self.y_speed = 0
         
+        new_rect = self.sprite.sprite_rect.move(self.x_speed, self.y_speed)
+        for wall in self.walls:
+            if new_rect.colliderect(wall):
+                # If collision, adjust speed to prevent moving through wall
+                if self.x_speed > 0:  # Moving right
+                    self.x_speed = wall.rect.left - self.sprite.sprite_rect.right
+                elif self.x_speed < 0:  # Moving left
+                    self.x_speed = wall.rect.right - self.sprite.sprite_rect.left
+                if self.y_speed > 0:  # Moving down
+                    self.y_speed = wall.rect.top - self.sprite.sprite_rect.bottom
+                elif self.y_speed < 0:  # Moving up
+                    self.y_speed = wall.rect.bottom - self.sprite.sprite_rect.top
+
+        # Update player's position
+        self.sprite.sprite_rect.move(self.x_speed, self.y_speed)
+        
         if not self.attacked:
             if keys_pressed[pygame.K_UP]:
                 self.state = "Attack"
@@ -220,8 +226,6 @@ class Player(Entity):
             self.update_info()
     
     def attack(self, monster_list = []):
-
-        print("Hello")
         if self.player_type == "Ranger":
             if len(monster_list) != 0:
                 current_time = pygame.time.get_ticks()
@@ -313,7 +317,8 @@ class Player(Entity):
                             mob.hurt(self.attack_damage)
                 if hit_mob or hit_wall:
                     projectile.kill()
-
+        self.sprite.sprite_rect = pygame.Rect(self.sprite.x, self.sprite.y, self.width, self.height)
+        pygame.draw.rect(self.window, (255, 255, 255), self.sprite.sprite_rect, 2)
         if self.shield != None:
             self.shield.update()
             if self.shield.is_shield_deactived() or self.state == "Attack":
@@ -323,13 +328,11 @@ class Player(Entity):
         
         super().draw()
 
-class Shield(Sprite):
+class Shield(pygame.sprite.Sprite):
     def __init__(self, x,  y, character, window):
         super().__init__(x, y, "OtherAssets\\AuraShield.png", window)
-        
         self.shield_started = pygame.time.get_ticks()
         self.sprite_image = pygame.transform.scale(self.sprite_image, (character.sprite.width + 10, character.sprite.height + 10))
-        
         self.sprite_rect = self.sprite_image.get_rect(topleft=(character.sprite.x, character.sprite.y))
         self.character = character
     
@@ -357,26 +360,21 @@ class Shield(Sprite):
 
 class Projectile(Sprite):
     def __init__(self, x, y, angle, window, image="OtherAssets\\ArrowSprite.png"):
-        
         super().__init__(x, y, image, window)
         self._projectile_angle = math.radians(angle)
         self.speed = 5
-        
         self.sprite_image = pygame.transform.rotate(self.sprite_image, angle)
-        self.sprite_rect = self.sprite_image.get_rect(topleft=(x, y))
         self.scale = 0.15
-
+        self.sprite_rect = self.sprite_image.get_rect(topleft=(x, y))
         self.x_speed = self.speed * math.cos(self._projectile_angle)
         self.y_speed = self.speed * math.sin(self._projectile_angle)
-
-        if angle == 0 or angle == 180:
+        if angle in (0, 180):
             self.y_speed = 0
         elif 0 < angle < 180:
             self.y_speed *= 1
         else:
             self.y_speed *= -1
-        
-        if angle == 90 or angle == 270:
+        if angle in (90, 270):
             self.x_speed = 0
         elif 90 < angle < 270:
             self.x_speed *= 1
@@ -384,28 +382,21 @@ class Projectile(Sprite):
             self.x_speed *= -1
 
     def hit(self, other_character):
-        hit_mob, hit_player, hit_wall = (False, False, False)
+        # Simplified collision detection
+        hit_mob = self.sprite_rect.colliderect(other_character.sprite_rect) and isinstance(other_character, Mob)
+        hit_player = self.sprite_rect.colliderect(other_character.sprite_rect) and isinstance(other_character, Player)
+        hit_wall = self.sprite_rect.colliderect(other_character.sprite_rect) and not isinstance(other_character, (Player, Mob))
+        if hit_wall:
+            self.x_speed = 0
+            self.y_speed = 0
+        return hit_mob, hit_player, hit_wall
 
-        if pygame.sprite.collide_mask(self.sprite_image, other_character.sprite_image):
-            if isinstance(other_character, Mob):
-                hit_mob = True
-            elif isinstance(other_character, Player):
-                hit_player = True
-            else:
-                hit_wall = True
-                self.x_speed = 0
-                self.y_speed = 0
-        
-        return (hit_mob, hit_player, hit_wall)
-    
-        
 class Mob(Entity):
-    def __init__(self, monster_type, window, x, y, player, walls = []):
+    def __init__(self, monster_type, window, x, y, player):
         with open(f"MonsterAssets\\{monster_type}\\CharacterInfo.json") as json_file:
             data = json.load(json_file)
 
         super().__init__(data, window, x, y)
-        
         self.walls_group = pygame.sprite.Group()
         self.moving = False
         self.attack_animation_time = 1500
@@ -417,34 +408,6 @@ class Mob(Entity):
         self.player_tracked = False
         self.distance = 1000
 
-        for wall in walls:
-            self.walls_group.add(wall)
-
-    def handle_character_states(self):
-        states = ["Walking", "Idle"]
-        directions = ["North", "West", "East", "South"]
-
-        self.previous_state = self.direction
-        self.previous_state = self.state
-
-        self.state = random.choice(states)
-        self.direction = random.choice(directions)
-
-        if self.state == "Walking":
-            if self.direction == "West":
-                self.x_speed = -self.VEL
-            elif self.direction == "East":
-                self.x_speed = self.VEL
-            else:
-                self.x_speed = 0
-
-            if self.direction == "North":
-                self.y_speed = -self.VEL
-            elif self.direction == "South":
-                self.y_speed = self.VEL
-            else:
-                self.y_speed = 0
-
         self.update_info()
 
     def track_player(self):
@@ -455,15 +418,12 @@ class Mob(Entity):
         character_diagonal = int(math.sqrt(self.width ** 2 + self.height ** 2))
         angle = math.degrees(math.atan2(y_difference, x_difference))
 
-        #print(character_diagonal)
-
         if angle < 0:
             angle += 360
 
-        if self.distance < 1000:
+        if self.distance < 450:
             self.player_tracked = True
             if self.creature != "Skeleton":
-
                 if self.distance > character_diagonal + 10:
                     self.state = "Walking"
                     if y_difference < -5:
@@ -484,7 +444,6 @@ class Mob(Entity):
 
                 if self.distance < character_diagonal + 10:
                     self.tackle()
-
                     if 45 <= angle <= 135:
                         self.direction = "North"
                     elif 225 <= angle <= 315:
@@ -494,7 +453,7 @@ class Mob(Entity):
                     else:
                         self.direction = "West"
             else:
-                if self.distance < 250:
+                if self.distance < 350:
                     self.state = "Attack"
                     if 45 <= angle <= 135:
                         self.direction = "North"
@@ -507,6 +466,8 @@ class Mob(Entity):
 
                     if len(self.projectiles) < 2:
                         self.shoot(angle)
+                    else:
+                        self.state = "Idle"
                 else:
                     self.state = "Idle"
 
@@ -526,30 +487,26 @@ class Mob(Entity):
 
     def shoot(self, angle, image="OtherAssets\\ArrowSprite.png"):
         current_time = pygame.time.get_ticks()
-
         if current_time - self.last_attack_animation_start > 1000:
             # Create and add a projectile if the cooldown time has passed
             if self.direction == "South":
-                arrow = Projectile(self.sprite.x + self.width // 2, self.sprite.y + 10, angle, self.window, image)
-                print("South")
+                start_x = self.sprite.x + self.width // 2
+                start_y = self.sprite.y + 10
             elif self.direction == "North":
-                print("North")
-                arrow = Projectile(self.sprite.x + self.width // 2, self.sprite.y + self.height + 10, angle, self.window, image)
+                start_x = self.sprite.x + self.width // 2
+                start_y = self.sprite.y + self.height + 10
             elif self.direction == "West":
-                print("West")
-                arrow = Projectile(self.sprite.x + 10, self.sprite.y + self.height // 2, angle, self.window, image)
+                start_x = self.sprite.x + 10
+                start_y = self.sprite.y + self.height // 2
             elif self.direction == "East":
-                print("East")
-                arrow = Projectile(self.sprite.x + 10 + self.width, self.sprite.y + self.height // 2, angle, self.window, image)
+                start_x = self.sprite.x + 10 + self.width
+                start_y = self.sprite.y + self.height // 2
             
-            self.projectiles.add(arrow)
+            self.projectiles.add(Projectile(start_x, start_y, angle, self.window, image))
             self.last_attack_animation_start = current_time
 
     def draw(self):
         self.track_player()
-        current_time = pygame.time.get_ticks()
-        if (current_time - self.last_state_change_time > self.state_change_time) and not self.player_tracked:
-            self.handle_character_states()
         
         if self.sprite.x + self.x_speed < 10:
             self.x_speed = 0
@@ -613,13 +570,13 @@ if __name__ == "__main__":
         if _player_character.death:
             _run = True
         
-        print(_player_character.health)
-
-        _slime.draw()
+        #_slime.draw()
         _skeleton.draw()
         #_zombie.draw()
 
         _arrow.draw()
+        
         pygame.display.update()
         _clock.tick(60)
     pygame.quit()
+
