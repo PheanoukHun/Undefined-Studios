@@ -7,10 +7,9 @@ from weapon import Weapon
 from ui import UI
 from shield import Shield
 from enemy import Enemy
-from projectile import Projectile
 
 class Level:
-    def __init__(self, levelnum = 1):
+    def __init__(self, levelnum = 1, player_character = "Knight"):
 
         self.screen = pygame.display.get_surface()
         self.world_data = read_world_data(levelnum)
@@ -21,8 +20,9 @@ class Level:
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
 
+        self.enemy_attack_sprites = pygame.sprite.Group()
+
         self.ui = UI()
-        self.projectiles = Projectile()
 
         #Attacks
         self.current_attack = None
@@ -62,6 +62,16 @@ class Level:
             self.current_attack.kill()
         self.current_attack = None
 
+    def mob_attack_logic(self):
+        if self.enemy_attack_sprites:
+            for attack_sprite in self.enemy_attack_sprites:
+                if attack_sprite.rect.colliderect(self.player.rect):
+                    collided_sprites = pygame.sprite.spritecollide(attack_sprite.rect, self.player.rect)
+                    if collided_sprites:
+                        for target_sprite in collided_sprites:
+                            attack_sprite.hit()
+                            attack_sprite.kill()
+
     def create_map(self):
         for yi, row in enumerate(self.world_data):
             for xi, col in enumerate(row):
@@ -81,8 +91,10 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player)
+        self.visible_sprites.enemy_update(self.player, [self.enemy_attack_sprites])
         self.player_attack_logic()
+        self.mob_attack_logic()
+        self.player.update()
         self.ui.display(self.player)
 
 class YSortCameraGroup(pygame.sprite.Group):
@@ -109,8 +121,8 @@ class YSortCameraGroup(pygame.sprite.Group):
             offset_position = sprite.rect.topleft - self.offset
             self.screen.blit(sprite.image, offset_position)
     
-    def enemy_update(self, player):
+    def enemy_update(self, player, groups):
         enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, "sprite_type") and sprite.sprite_type == "Mob"]
         for enemy in enemy_sprites:
-            enemy.enemy_update(player)
+            enemy.enemy_update(player, groups)
 

@@ -1,8 +1,10 @@
 import pygame
+import math
 import json
 from settings import *
 from entity import Entity
 from spritesheet import SpriteSheet
+from projectile import ProjectilePlayer
 
 class Enemy(Entity):
     def __init__(self, monster_type, pos, groups, obstacle_sprites, damage_player):
@@ -35,6 +37,17 @@ class Enemy(Entity):
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(0, -10)
         self.walls = obstacle_sprites
+
+    def shoot_arrow(self, player, groups):
+        groups.append(self.projectiles)
+        if len(self.projectiles) < 4:
+            self.player = player
+            player_center = player.rect.center
+            mob_center = player.rect.center
+            difference = (player_center - mob_center)
+
+            angle = math.atan2(difference[1]/difference[0])
+            ProjectilePlayer(groups, "OtherAssets\ArrowSprite.png", 34, 6, angle, self.rect.midright, self.damage_player)
 
     def animate(self):
 
@@ -92,13 +105,17 @@ class Enemy(Entity):
         else:
             self.state = "Idle"
     
-    def actions(self, player):
+    def actions(self, player, group):
         if self.state == 'Attack':
             self.attack_time = pygame.time.get_ticks()
             self.direction = pygame.math.Vector2()
-            if self.rect.colliderect(player.rect):
-                self.damage_player(self.damage)
-                self.can_attack = False
+            if self.monster_type != "Skeleton":
+                if self.rect.colliderect(player.rect):
+                    self.damage_player(self.damage)
+                    self.can_attack = False
+                else:
+                    pass
+                    #self.shoot_arrow(self.player, group)
 
         elif self.state == "Move":
             self.direction = self.get_player_distance_direction(player)[1]
@@ -132,15 +149,18 @@ class Enemy(Entity):
             self.kill()
 
     def update(self):
+        if self.projectiles:
+            self.projectiles.draw(pygame.display.get_surface())
         self.knockback()
         self.cooldown()
         self.animate()
         self.move(self.speed)
     
-    def enemy_update(self, player):
+    def enemy_update(self, player, group):
 
+        self.player = player
         if player.rect.x > self.rect.x: self.image = pygame.transform.flip(self.image.convert_alpha(), True, False)
         else: self.image = pygame.transform.flip(self.image.convert_alpha(), False, False)
 
         self.get_status(player)
-        self.actions(player)
+        self.actions(player, group)

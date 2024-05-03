@@ -3,6 +3,7 @@ import json
 from spritesheet import SpriteSheet
 from settings import *
 from entity import Entity
+from shield import Shield
 
 class Player(Entity):
     def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon):
@@ -10,6 +11,7 @@ class Player(Entity):
         super().__init__(groups)
         self.player_type = player_type
         self.sprite_type = "Player"
+        self.visible_sprite = groups[0]
 
         # Animation Data
 
@@ -25,12 +27,21 @@ class Player(Entity):
 
         self.walls = wall
 
+        # Shield
+
+        self.shield = None
+        self.shield_cooldown = 5000
+        self.shield_start = 0
+        self.shield_down = False
+
         #Attacks
 
         self.attacking = False
         self.attack_time = None
         self.create_attack = create_attack
         self.destroy_weapon = destroy_weapon
+        self.shield_down = True
+        self.shield_available = True
 
         # Damage Player
 
@@ -153,7 +164,14 @@ class Player(Entity):
                     self.create_attack()
                 else:
                     self.shoot()
-    
+            
+            # Shield Input
+            if self.shield_available:
+                if keys[pygame.K_RCTRL]:
+                    self.shield = Shield(self)
+                    self.shield_available = False
+                    self.shield_start = pygame.time.get_ticks()
+        
     # Attack Cooldown
 
     def cooldown(self):
@@ -165,10 +183,25 @@ class Player(Entity):
         if not self.vulnerable:
             if current_time - self.hurt_time > self.invulnerability_duration:
                 self.vulnerable = True
+        if self.shield_down:
+            if current_time - self.shield_cooldown:
+                self.shield_available = True
+                self.shield_down = False
 
     def update(self):
+
         self.animate()
         self.cooldown()
         self.input()
         self.get_status()
         self.move(self.speed)
+
+        if self.shield != None:
+            print("Hello")
+            self.shield.update()
+            current_time = pygame.time.get_ticks()
+            if current_time - self.shield_start > 5000:
+                    self.shield_start = current_time
+                    self.shield = None
+                    self.shield_down = False
+                    self.shield_available = False

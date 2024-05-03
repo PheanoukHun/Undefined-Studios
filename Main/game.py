@@ -23,8 +23,8 @@ class Game:
         self.level.player.player_type = player
         self.level.player.import_player_assets()
 
-    def change_level(self, levelnum):
-        self.level = Level(levelnum)
+    def change_level(self, levelnum, player_character):
+        self.level = Level(levelnum, player_character)
 
     def run(self):
         while True:
@@ -45,8 +45,6 @@ class Game:
                     sys.exit()
                 if self.resume_button.draw(self.screen):
                     self.pause = False
-
-            #debug(self.level.player.data[self.level.player.state])
 
             pygame.display.update()
             self.clock.tick(FPS)
@@ -196,7 +194,7 @@ if __name__ == "__main__":
     if is_menu2:
         player_character = menu2(True)
     levelnum = menu3()
-    game.change_level(levelnum)
+    game.change_level(levelnum, player_character)
     result = game.run()
 
     if result:
