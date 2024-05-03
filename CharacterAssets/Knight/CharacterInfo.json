@@ -1,50 +1,33 @@
 {
-    "Health": 25,
-    "AttackDamage" : 5,
+    "Health": 100,
+    "AttackDamage" : 20,
+    "Resistance" : 3,
+    "AnimationSteps" : 5,
+    "AnimationSpeed" : 125,
+    "Width" : 64,
+    "Height" : 64,
+    "AttackHeight": 80,
+    "AttackWidth" : 188,
+    "AttackAnimationSteps" : 6,
     "VEL" : 5,
+    
+    "Up" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+    "Down" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+    "Right" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+    "Left" : "CharacterAssets\\Knight\\KnightWalkingLeft.png",
 
-    "Walking" : {
-        
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
-        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
-        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
-        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
-    },
+    "Up_Idle" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
+    "Down_Idle" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
+    "Right_Idle" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
+    "Left_Idle" : "CharacterAssets\\Knight\\KnightWalkingLeft.png",
 
-    "Idle" : {
-        "AnimationSteps" : 1,
-        "AnimationSpeed": 250,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Knight\\KnightWalkingUp.png",
-        "South" : "CharacterAssets\\Knight\\KnightWalkingDown.png",
-        "East" : "CharacterAssets\\Knight\\KnightWalkingRight.png",
-        "West" : "CharacterAssets\\Knight\\KnightWalkingLeft.png"
-    },
+    "Up_Attack" : "CharacterAssets\\Knight\\KnightAttackUp.png",
+    "Down_Attack" : "CharacterAssets\\Knight\\KnightAttackDown.png",
+    "Right_Attack" : "CharacterAssets\\Knight\\KnightAttackRight.png",
+    "Left_Attack" : "CharacterAssets\\Knight\\KnightAttackLeft.png",
 
-    "Hurt" : {
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 140,
-        "North" : "CharacterAssets\\Knight\\KnightDead.png",
-        "South" : "CharacterAssets\\Knight\\KnightDead.png",
-        "East" : "CharacterAssets\\Knight\\KnightDead.png",
-        "West" : "CharacterAssets\\Knight\\KnightDead.png"
-    },
-
-    "Attack" : {
-        "AnimationSteps" : 6,
-        "AnimationSpeed": 125,
-        "Height" : 100,
-        "Width" : 188,
-        "North" : "CharacterAssets\\Knight\\KnightAttackUp.png",
-        "South" : "CharacterAssets\\Knight\\KnightAttackDown.png",
-        "East" : "CharacterAssets\\Knight\\KnightAttackRight.png",
-        "West" : "CharacterAssets\\Knight\\KnightAttackLeft.png"
-    }
+    "Up_Dead" : "CharacterAssets\\Knight\\KnightDead.png",
+    "Down_Dead" : "CharacterAssets\\Knight\\KnightDead.png",
+    "Right_Dead" : "CharacterAssets\\Knight\\KnightDead.png",
+    "Left_Dead" : "CharacterAssets\\Knight\\KnightDead.png"
 }

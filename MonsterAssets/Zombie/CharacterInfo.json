@@ -1,50 +1,18 @@
 {
     "Health": 20,
-    "AttackDamage" : 7,
-    "VEL" : 3,
+    "AttackDamage": 7,
+    "Resistance": 3,
+    "AnimationSteps": 5,
+    "AnimationSpeed": 125,
+    "Width": 64,
+    "Height": 64,
+    "AttackHeight": 64,
+    "AttackWidth": 64,
+    "AttackAnimationSteps": 6,
+    "VEL": 3,
 
-    "Walking" : {
-        
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "MonsterAssets\\Zombie\\ZombieWalkingUp.png",
-        "South" : "MonsterAssets\\Zombie\\ZombieWalkingDown.png",
-        "East" : "MonsterAssets\\Zombie\\ZombieWalkingRight.png",
-        "West" : "MonsterAssets\\Zombie\\ZombieWalkingLeft.png"
-    },
-
-    "Idle" : {
-        "AnimationSteps" : 1,
-        "AnimationSpeed": 250,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "MonsterAssets\\Zombie\\ZombieWalkingUp.png",
-        "South" : "MonsterAssets\\Zombie\\ZombieWalkingDown.png",
-        "East" : "MonsterAssets\\Zombie\\ZombieWalkingRight.png",
-        "West" : "MonsterAssets\\Zombie\\ZombieWalkingLeft.png"
-    },
-
-    "Hurt" : {
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "MonsterAssets\\Zombie\\ZombieDead.png",
-        "South" : "MonsterAssets\\Zombie\\ZombieDead.png",
-        "East" : "MonsterAssets\\Zombie\\ZombieDead.png",
-        "West" : "MonsterAssets\\Zombie\\ZombieDead.png"
-    },
-
-    "Attack" : {
-        "AnimationSteps" : 6,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "MonsterAssets\\Zombie\\ZombieAttackUp.png",
-        "South" : "MonsterAssets\\Zombie\\ZombieAttackDown.png",
-        "East" : "MonsterAssets\\Zombie\\ZombieAttackRight.png",
-        "West" : "MonsterAssets\\Zombie\\ZombieAttackLeft.png"
-    }
+    "Idle": "MonsterAssets\\Zombie\\ZombieWalkingLeft.png",
+    "Move": "MonsterAssets\\Zombie\\ZombieWalkingLeft.png",
+    "Attack": "MonsterAssets\\Zombie\\ZombieAttackLeft.png",
+    "Dead": "MonsterAssets\\Zombie\\ZombieDead.png"
 }
