@@ -13,6 +13,5 @@
 
     "Idle": "MonsterAssets\\Zombie\\ZombieWalkingLeft.png",
     "Move": "MonsterAssets\\Zombie\\ZombieWalkingLeft.png",
-    "Attack": "MonsterAssets\\Zombie\\ZombieAttackLeft.png",
-    "Dead": "MonsterAssets\\Zombie\\ZombieDead.png"
+    "Attack": "MonsterAssets\\Zombie\\ZombieAttackLeft.png"
 }

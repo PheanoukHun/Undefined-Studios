@@ -13,6 +13,5 @@
 
     "Move": "MonsterAssets\\Slime\\BouncingSpritesheet.png",
     "Idle": "MonsterAssets\\Slime\\IdleSpritesheet.png",
-    "Attack": "MonsterAssets\\Slime\\BouncingSpritesheet.png",
-    "Dead": "MonsterAssets\\Slime\\DeathSpritesheet.png"
+    "Attack": "MonsterAssets\\Slime\\BouncingSpritesheet.png"
 }
