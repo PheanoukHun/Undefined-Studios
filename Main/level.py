@@ -40,7 +40,6 @@ class Level:
     def damage_player(self, amount):
         if self.player.vulnerable:
             self.player.hp -= amount
-            print(self.player.hp)
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
 

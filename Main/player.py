@@ -184,7 +184,7 @@ class Player(Entity):
             if current_time - self.hurt_time > self.invulnerability_duration:
                 self.vulnerable = True
         if self.shield_down:
-            if current_time - self.shield_cooldown:
+            if current_time - self.shield_cooldown > 0:
                 self.shield_available = True
                 self.shield_down = False
 
@@ -197,8 +197,11 @@ class Player(Entity):
         self.move(self.speed)
 
         if self.shield != None:
-            print("Hello")
             self.shield.update()
+            self.shield_start = current_time
+            self.shield = None
+            self.shield_down = False
+            self.shield_available = False
             current_time = pygame.time.get_ticks()
             if current_time - self.shield_start > 5000:
                     self.shield_start = current_time

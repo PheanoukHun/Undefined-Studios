@@ -16,6 +16,7 @@ class ProjectilePlayer(pygame.sprite.Sprite):
         self.speed = 7
         self.x_speed = math.cos(angle) * self.speed
         self.y_speed = math.sin(angle) * self.speed
+        
     
     def update(self):
         self.rect.move(self.x_speed, self.y_speed)

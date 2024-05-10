@@ -11,7 +11,8 @@ class Weapon(pygame.sprite.Sprite):
             self.image = pygame.Surface((40, player.image.get_height())).convert_alpha()
         if direction == "Up" or direction == "Down":
             self.image = pygame.Surface((player.image.get_width(), 40)).convert_alpha()
-        self.image.set_colorkey((0, 0, 0))
+        self.image.set_colorkey((55,67, 95))
+        
         #Placement
         if direction == "Left":
             self.rect = self.image.get_rect(midright = player.rect.midleft + pygame.math.Vector2(20, -75))

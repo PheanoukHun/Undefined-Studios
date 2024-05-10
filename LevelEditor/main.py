@@ -13,8 +13,8 @@ import pickle
 SCREEN_WIDTH, SCREEN_HEIGHT = (1000, 800)
 LOWER_MARGIN, SIDE_MARGIN = (100, 300)
 
-ROWS = 150
-MAX_COLS = 150
+ROWS = 70
+MAX_COLS = 70
 TILE_SIZE = SCREEN_HEIGHT // 16
 TILE_TYPES = 21
 
@@ -40,7 +40,6 @@ WHITE = (255, 255, 255)
 RED = (200, 25, 25)
 
 # Create Empty Tile List
-
 
 world_data = []
 
