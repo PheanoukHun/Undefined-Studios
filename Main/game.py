@@ -1,18 +1,27 @@
-import pygame, sys
-from level import Level
-from settings import *
-from button import Button
-from debug import debug
+import pygame
+import sys
+from GameEngine.level import Level
+from GameEngine.settings import *
+from Utilities.button import Button
+from Utilities.debug import debug
 
 class Game:
+    """
+    Main game class responsible for managing game states and logic.
+    """
+
     def __init__(self):
+        """
+        Initialize the game.
+        """
         pygame.init()
 
+        # Set up the display
         pygame.display.set_caption("Forgotten Frontiers")
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-        self.level = Level()
 
+        # Initialize game state variables
         self.pause = False
         self.resume_button = Button(0, 0, "Buttons\\Resume.png")
         self.exit_button = Button(0, 0, "Buttons\\Exit.png")
@@ -20,13 +29,32 @@ class Game:
         self.exit_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + self.exit_button.image.get_height() // 2 + 30)
 
     def update(self, player):
+        """
+        Update the game state.
+        
+        Args:
+            player (str): Type of player character.
+        """
         self.level.player.player_type = player
         self.level.player.import_player_assets()
 
     def change_level(self, levelnum, player_character):
+        """
+        Change the game level.
+        
+        Args:
+            levelnum (int): Number of the level.
+            player_character (str): Type of player character.
+        """
         self.level = Level(levelnum, player_character)
 
     def run(self):
+        """
+        Main game loop.
+        
+        Returns:
+            bool: True if the game is won, False if the game is over.
+        """
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -54,10 +82,16 @@ class Game:
             if len(self.level.attackable_sprites) == 0:
                 return True
 
-def finish_frame():
-    pygame.display.update()
-
 def menu1(boolean):
+    """
+    First menu screen.
+    
+    Args:
+        boolean (bool): Boolean controlling menu loop.
+    
+    Returns:
+        bool: True if start button is clicked.
+    """
     screen = pygame.display.get_surface()
     start_button = Button(0, 0, "Buttons\\Start.png")
     credit_button = Button(0, 0, "Buttons\\Credit.png")
@@ -98,10 +132,18 @@ def menu1(boolean):
             blit_text(screen, "Game Created by Undefined Studios. Images are Credited in the Game Files.", (50, 50), credit_font, color_constants["Black"])
         
         game.clock.tick(FPS)
-        finish_frame()
+        pygame.display.update()
 
 def menu2(boolean):
+    """
+    Second menu screen for selecting player character.
     
+    Args:
+        boolean (bool): Boolean controlling menu loop.
+    
+    Returns:
+        str: Type of selected player character.
+    """
     screen = pygame.display.get_surface()
 
     knight_button = Button(0, 0, "Buttons\\Knight.png")
@@ -134,17 +176,23 @@ def menu2(boolean):
         wizard_button.draw(screen)
         
         game.clock.tick()
-        finish_frame()
+        pygame.display.update()
 
 def menu3():
+    """
+    Third menu screen for selecting game level.
+    
+    Returns:
+        int: Number of the selected game level.
+    """
     screen = pygame.display.get_surface()
     level1 = Button(0, 0, "Buttons\\Level1.png")
     level2 = Button(0, 0, "Buttons\\Level2.png")
     level3 = Button(0, 0, "Buttons\\Level3.png")
 
-    level1.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 150)
+    level1.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 180)
     level2.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-    level3.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+    level3.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 180)
     
     while True:
         for event in pygame.event.get():
@@ -169,9 +217,15 @@ def menu3():
         level3.draw(screen)
         
         game.clock.tick(FPS)
-        finish_frame()
+        pygame.display.update()
 
 def results(text):
+    """
+    Display the game result.
+    
+    Args:
+        text (str): Text to be displayed.
+    """
     font = pygame.font.SysFont("Arial", 100)
     text = font.render(text, True, (255, 255, 255))
     text_rect = text.get_rect(center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
@@ -189,14 +243,20 @@ def results(text):
         pygame.display.update()
 
 if __name__ == "__main__":
+    # Initialize the game
     game = Game()
+    
+    # Display menu screens and get user inputs
     is_menu2 = menu1(True)
     if is_menu2:
         player_character = menu2(True)
     levelnum = menu3()
+    
+    # Start the selected game level
     game.change_level(levelnum, player_character)
     result = game.run()
 
+    # Display game result
     if result:
         results("You Win!")
     else:
