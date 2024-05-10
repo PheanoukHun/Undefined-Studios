@@ -1,6 +1,6 @@
 import pygame
 import math
-from settings import *
+from GameEngine.settings import *
 
 class ProjectilePlayer(pygame.sprite.Sprite):
     def __init__(self, groups, image, width, height, angle, pos, damage_player):

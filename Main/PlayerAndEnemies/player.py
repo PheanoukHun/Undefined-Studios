@@ -1,9 +1,9 @@
 import pygame
 import json
-from spritesheet import SpriteSheet
-from settings import *
-from entity import Entity
-from shield import Shield
+from PlayerAndEnemies.spritesheet import SpriteSheet
+from GameEngine.settings import *
+from PlayerAndEnemies.entity import Entity
+from Weapons.shield import Shield
 
 class Player(Entity):
     def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon):
@@ -197,7 +197,6 @@ class Player(Entity):
         self.move(self.speed)
 
         if self.shield != None:
-            print("Hello")
             self.shield.update()
             current_time = pygame.time.get_ticks()
             if current_time - self.shield_start > 5000:

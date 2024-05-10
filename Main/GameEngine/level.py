@@ -1,12 +1,12 @@
 import pygame
 import random
-from settings import *
-from tile import Tile
-from player import Player
-from weapon import Weapon
-from ui import UI
-from shield import Shield
-from enemy import Enemy
+from GameEngine.settings import *
+from PlayerAndEnemies.tile import Tile
+from PlayerAndEnemies.player import Player
+from Weapons.weapon import Weapon
+from Utilities.ui import UI
+from Weapons.shield import Shield
+from PlayerAndEnemies.enemy import Enemy
 
 class Level:
     def __init__(self, levelnum = 1, player_character = "Knight"):
@@ -40,7 +40,6 @@ class Level:
     def damage_player(self, amount):
         if self.player.vulnerable:
             self.player.hp -= amount
-            print(self.player.hp)
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
 

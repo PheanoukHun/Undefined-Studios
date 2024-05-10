@@ -1,8 +1,8 @@
 import pygame, sys
-from level import Level
-from settings import *
-from button import Button
-from debug import debug
+from GameEngine.level import Level
+from GameEngine.settings import *
+from Utilities.button import Button
+from Utilities.debug import debug
 
 class Game:
     def __init__(self):
@@ -11,7 +11,6 @@ class Game:
         pygame.display.set_caption("Forgotten Frontiers")
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-        self.level = Level()
 
         self.pause = False
         self.resume_button = Button(0, 0, "Buttons\\Resume.png")

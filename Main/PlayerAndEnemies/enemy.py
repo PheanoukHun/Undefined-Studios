@@ -1,10 +1,10 @@
 import pygame
 import math
 import json
-from settings import *
-from entity import Entity
-from spritesheet import SpriteSheet
-from projectile import ProjectilePlayer
+from GameEngine.settings import *
+from PlayerAndEnemies.entity import Entity
+from PlayerAndEnemies.spritesheet import SpriteSheet
+from Weapons.projectile import ProjectilePlayer
 
 class Enemy(Entity):
     def __init__(self, monster_type, pos, groups, obstacle_sprites, damage_player):
