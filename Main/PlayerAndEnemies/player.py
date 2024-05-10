@@ -21,7 +21,7 @@ class Player(Entity):
 
         self.image = pygame.transform.scale(pygame.image.load(f"CharacterAssets\{player_type}\{player_type}Single.png").convert_alpha(), (64, 64))
         self.rect = self.image.get_rect(topleft = position)
-        self.hitbox = self.rect.inflate(0, -20)
+        self.hitbox = self.rect.inflate(-50, -30)
 
         # Obstacles
 

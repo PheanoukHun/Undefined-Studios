@@ -35,7 +35,7 @@ class Enemy(Entity):
         self.state = "Idle"
         self.image = pygame.Surface((self.data["Width"], self.data["Height"]))
         self.rect = self.image.get_rect(topleft = pos)
-        self.hitbox = self.rect.inflate(0, -10)
+        self.hitbox = self.rect.inflate(-30, -30)
         self.walls = obstacle_sprites
 
     def shoot_arrow(self, player, groups):
@@ -147,6 +147,9 @@ class Enemy(Entity):
     def check_death(self):
         if self.hp < 0:
             self.kill()
+
+    def target_player(self, player):
+        pass
 
     def update(self):
         if self.projectiles:
