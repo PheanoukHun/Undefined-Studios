@@ -1,10 +1,8 @@
 import json
-
 import pygame
 from GameEngine.settings import *
 from PlayerAndEnemies.entity import Entity
 from PlayerAndEnemies.spritesheet import SpriteSheet
-from Weapons.weapon import Shield
 
 
 class Player(Entity):
@@ -191,16 +189,8 @@ class Player(Entity):
         if not self.vulnerable:
             if current_time - self.hurt_time > self.invulnerability_duration:
                 self.vulnerable = True
-<<<<<<< HEAD
         if self.shield_cooldown:
             if current_time - self.shield_cooldown_start > 5000 :
-=======
-        if self.shield_down:
-            if current_time - self.shield_cooldown > 0:
-<<<<<<< Updated upstream
-=======
->>>>>>> 427c7b8c29aeb2e5afd4d5fa48da95e55beb015a
->>>>>>> Stashed changes
                 self.shield_available = True
                 self.shield_down = False
 
@@ -212,20 +202,5 @@ class Player(Entity):
         self.get_status()
         self.move(self.speed)
 
-<<<<<<< HEAD
         if self.shield_on:
             self.shield.update()
-=======
-        if self.shield != None:
-            self.shield.update()
-            self.shield_start = current_time
-            self.shield = None
-            self.shield_down = False
-            self.shield_available = False
-            current_time = pygame.time.get_ticks()
-            if current_time - self.shield_start > 5000:
-                    self.shield_start = current_time
-                    self.shield = None
-                    self.shield_down = False
-                    self.shield_available = False
->>>>>>> 427c7b8c29aeb2e5afd4d5fa48da95e55beb015a
