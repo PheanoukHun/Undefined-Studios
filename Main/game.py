@@ -1,3 +1,5 @@
+# Importing the Necessary Libraries
+
 import pygame
 import sys
 from GameEngine.level import Level
@@ -5,6 +7,7 @@ from GameEngine.settings import *
 from Utilities.button import Button
 from Utilities.debug import debug
 
+# Game Class
 class Game:
     """
     Main game class responsible for managing game states and logic.
@@ -82,103 +85,98 @@ class Game:
             if len(self.level.attackable_sprites) == 0:
                 return True
 
-def menu1(boolean):
+# Menu1 Function
+def menu1():
     """
     First menu screen.
     
-    Args:
-        boolean (bool): Boolean controlling menu loop.
-    
     Returns:
-        bool: True if start button is clicked.
+        None: Returns to the Main Loop.
     """
+    
+    # Get the Screen
+    
     screen = pygame.display.get_surface()
-    start_button = Button(0, 0, "Buttons\\Start.png")
-    credit_button = Button(0, 0, "Buttons\\Credit.png")
-    exit_button = Button(0, 0, "Buttons\\Exit.png")
+    
+    # Create the Buttons
 
-    start_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 150)
-    credit_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-    exit_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+    start_button = Button(0, 0, "Buttons/Start.png")
+    credit_button = Button(0, 0, "Buttons/Credit.png")
+    exit_button = Button(0, 0, "Buttons/Exit.png")
+    info_button = Button(0, 0, "Buttons/Info.png")
+    
+    # Variable is Shown
 
     menu_shown = False
+    info_shown = False
+
+    # Centers the Button on the Screen
+
+    start_button.rect.center = (SCREEN_WIDTH // 2, 125)
+    credit_button.rect.center = (SCREEN_WIDTH // 2, 310)
+    info_button.rect.center = (SCREEN_WIDTH // 2, 490)
+    exit_button.rect.center = (SCREEN_WIDTH // 2, 675)
     
-    while boolean:
+    # Menu Main Loop
+
+    while True:
+
+        # Event Getter
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+        
+            # Buttons Pressed Event
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.rect.collidepoint(event.pos):
-                    boolean = False
-                    return True
+                    return
                 elif credit_button.rect.collidepoint(event.pos):
                     menu_shown = True
                     display_start = pygame.time.get_ticks()
+                
+                elif info_button.rect.collidepoint(event.pos):
+                    info_shown = True
+                    display_start = pygame.time.get_ticks()
+
                 elif exit_button.rect.collidepoint(event.pos):
                     pygame.quit()
                     sys.exit()
         
-        screen.fill((0, 0, 0))  # Clear the screen
+        # Draws the Screen
+
+        screen.fill((0, 0, 0))
         start_button.draw(screen)
         credit_button.draw(screen)
         exit_button.draw(screen)
+        info_button.draw(screen)
         
+        # Credit Menu Opened
+
         if menu_shown:
             current_time = pygame.time.get_ticks()
             if current_time - display_start > 5000:
                 menu_shown = False
-            credit_rect = pygame.draw.rect(screen, (85, 85, 85), (50, 50, 850, 700))
-            blit_text(screen, "Game Created by Undefined Studios. Images are Credited in the Game Files.", (50, 50), credit_font, color_constants["Black"])
+            pygame.draw.rect(screen, (85, 85, 85), (50, 50, 850, 700))
+            blit_text(screen, 800, "Game Created by Undefined Studios. Images are Credited in the Game Files.", (100, 75), credit_font, color_constants["Black"])
         
+        # Info Menu Opened
+
+        if info_shown:
+            current_time = pygame.time.get_ticks()
+            if current_time - display_start > 7500:
+                info_shown = False
+            pygame.draw.rect(screen, (85, 85, 85), (50, 50, 850, 700))
+            blit_text(screen, 800, "This is a Dungeon Crawler Game where you get to choose the level you will play and the character you play as. Player Movements are WASD, Attack button is Right Alt, and Shield is Right Ctrl. There will be medical packs that when ran into will heal the player.", (100, 75), credit_font, color_constants["Black"])
+
+        # Refresh the Frame
+
         game.clock.tick(FPS)
         pygame.display.update()
 
-def menu2(boolean):
-    """
-    Second menu screen for selecting player character.
-    
-    Args:
-        boolean (bool): Boolean controlling menu loop.
-    
-    Returns:
-        str: Type of selected player character.
-    """
-    screen = pygame.display.get_surface()
-
-    knight_button = Button(0, 0, "Buttons\\Knight.png")
-    ranger_button = Button(0, 0, "Buttons\\Ranger.png")
-    wizard_button = Button(0, 0, "Buttons\\Wizard.png")
-
-    knight_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 200)
-    ranger_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-    wizard_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
-
-    while boolean:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if knight_button.rect.collidepoint(event.pos):
-                    player_type = "Knight"
-                    return player_type
-                elif ranger_button.rect.collidepoint(event.pos):
-                    player_type = "Ranger"
-                    return player_type
-                elif wizard_button.rect.collidepoint(event.pos):
-                    player_type = "Wizard"
-                    return player_type
-        
-        screen.fill((0, 0, 0))  # Clear the screen
-        knight_button.draw(screen)
-        ranger_button.draw(screen)
-        wizard_button.draw(screen)
-        
-        game.clock.tick()
-        pygame.display.update()
-
-def menu3():
+# Menu2 Function
+def menu2():
     """
     Third menu screen for selecting game level.
     
@@ -219,6 +217,52 @@ def menu3():
         game.clock.tick(FPS)
         pygame.display.update()
 
+# Menu3 Function
+def menu3():
+    """
+    Second menu screen for selecting player character.
+    
+    Args:
+        boolean (bool): Boolean controlling menu loop.
+    
+    Returns:
+        str: Type of selected player character.
+    """
+    screen = pygame.display.get_surface()
+
+    knight_button = Button(0, 0, "Buttons\\Knight.png")
+    ranger_button = Button(0, 0, "Buttons\\Ranger.png")
+    wizard_button = Button(0, 0, "Buttons\\Wizard.png")
+
+    knight_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 200)
+    ranger_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    wizard_button.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 150)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if knight_button.rect.collidepoint(event.pos):
+                    player_type = "Knight"
+                    return player_type
+                elif ranger_button.rect.collidepoint(event.pos):
+                    player_type = "Ranger"
+                    return player_type
+                elif wizard_button.rect.collidepoint(event.pos):
+                    player_type = "Wizard"
+                    return player_type
+        
+        screen.fill((0, 0, 0))  # Clear the screen
+        knight_button.draw(screen)
+        ranger_button.draw(screen)
+        wizard_button.draw(screen)
+        
+        game.clock.tick()
+        pygame.display.update()
+
+# Results Function
 def results(text):
     """
     Display the game result.
@@ -242,15 +286,16 @@ def results(text):
         game.clock.tick(FPS)
         pygame.display.update()
 
+# Main Game if This is the main function
 if __name__ == "__main__":
     # Initialize the game
     game = Game()
     
     # Display menu screens and get user inputs
-    is_menu2 = menu1(True)
-    if is_menu2:
-        player_character = menu2(True)
-    levelnum = menu3()
+    
+    menu1()
+    levelnum = menu2()
+    player_character = menu3()
     
     # Start the selected game level
     game.change_level(levelnum, player_character)

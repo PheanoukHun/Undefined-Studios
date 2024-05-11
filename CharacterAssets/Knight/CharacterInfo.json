@@ -9,6 +9,7 @@
     "AttackHeight": 80,
     "AttackWidth" : 188,
     "AttackAnimationSteps" : 6,
+    "AttackAnimationSpeed" : 75,
     "VEL" : 5,
     
     "Up" : "CharacterAssets\\Knight\\KnightWalkingUp.png",

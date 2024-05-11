@@ -3,9 +3,8 @@ import random
 from GameEngine.settings import *
 from PlayerAndEnemies.tile import Tile
 from PlayerAndEnemies.player import Player
-from Weapons.weapon import Weapon
+from Weapons.weapon import Slash, Shield
 from Utilities.ui import UI
-from Weapons.shield import Shield
 from PlayerAndEnemies.enemy import Enemy
 from Utilities.camera import YSortCameraGroup
 
@@ -24,6 +23,7 @@ class Level:
         self.enemy_attack_sprites = pygame.sprite.Group()
 
         self.ui = UI()
+        self.player_type = player_character
 
         #Attacks
         self.current_attack = None
@@ -40,12 +40,19 @@ class Level:
 
     def damage_player(self, amount):
         if self.player.vulnerable:
+            if self.player.shield != None:
+                if amount - 5 < 0:
+                    amount = 0
+                else:
+                    amount -= 5
             self.player.hp -= amount
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
+            print(self.player.hp)
+            print(self.player.shield)
 
     def create_attack(self):
-        self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
+        self.current_attack = Slash(self.player, [self.visible_sprites, self.attack_sprites])
 
     """def player_shoot(self):
         if self.player.player_type == "Wizard":
@@ -53,9 +60,10 @@ class Level:
         if self.player.player_type == "Ranger":
             self.projectiles.arrow(self.player, [self.attack_sprites])
 """
-    
+
     def shield(self):
-        Shield(self.player.rect.x, self.player.rect.y, self.player, pygame.display.get_surface())
+        shield = Shield(self.player, [self.visible_sprites])
+        return shield
     
     def destroy_weapon(self):
         if self.current_attack:
@@ -86,7 +94,7 @@ class Level:
                         , self.obstacle_sprites, self.damage_player)
                 if int(col) == 15:
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites,
-                                        "Knight", self.create_attack, self.destroy_weapon)
+                                        self.player_type, self.create_attack, self.destroy_weapon, self.shield)
     
     def run(self):
         self.visible_sprites.custom_draw(self.player)

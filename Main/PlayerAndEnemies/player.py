@@ -1,12 +1,14 @@
-import pygame
 import json
-from PlayerAndEnemies.spritesheet import SpriteSheet
+
+import pygame
 from GameEngine.settings import *
 from PlayerAndEnemies.entity import Entity
-from Weapons.shield import Shield
+from PlayerAndEnemies.spritesheet import SpriteSheet
+from Weapons.weapon import Shield
+
 
 class Player(Entity):
-    def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon):
+    def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon, create_shield):
         
         super().__init__(groups)
         self.player_type = player_type
@@ -30,9 +32,11 @@ class Player(Entity):
         # Shield
 
         self.shield = None
-        self.shield_cooldown = 5000
-        self.shield_start = 0
-        self.shield_down = False
+        self.shield_on = False
+        self.shield_cooldown_start = 0
+        self.shield_cooldown = False
+        self.shield_available = True
+        self.create_shield = create_shield
 
         #Attacks
 
@@ -40,8 +44,6 @@ class Player(Entity):
         self.attack_time = None
         self.create_attack = create_attack
         self.destroy_weapon = destroy_weapon
-        self.shield_down = True
-        self.shield_available = True
 
         # Damage Player
 
@@ -71,8 +73,14 @@ class Player(Entity):
         # Set the Image
 
         if self.state != self.previous_state:
-            self.previous_state = self.state
             self.sprite_sheet = SpriteSheet(self.data[self.state])
+            self.previous_state = self.state
+            if "Idle" in self.state:
+                self.animation_speed = 0
+            elif "Attack" in self.state:
+                self.animation_speed = 0.25
+            else:
+                self.animation_speed = 0.15
 
         if self.attacking:
             height = self.data["AttackHeight"]
@@ -168,9 +176,9 @@ class Player(Entity):
             # Shield Input
             if self.shield_available:
                 if keys[pygame.K_RCTRL]:
-                    self.shield = Shield(self)
-                    self.shield_available = False
-                    self.shield_start = pygame.time.get_ticks()
+                    if self.shield == None:
+                        self.shield = self.create_shield()
+                        self.shield_available = False
         
     # Attack Cooldown
 
@@ -183,8 +191,16 @@ class Player(Entity):
         if not self.vulnerable:
             if current_time - self.hurt_time > self.invulnerability_duration:
                 self.vulnerable = True
+<<<<<<< HEAD
+        if self.shield_cooldown:
+            if current_time - self.shield_cooldown_start > 5000 :
+=======
         if self.shield_down:
             if current_time - self.shield_cooldown > 0:
+<<<<<<< Updated upstream
+=======
+>>>>>>> 427c7b8c29aeb2e5afd4d5fa48da95e55beb015a
+>>>>>>> Stashed changes
                 self.shield_available = True
                 self.shield_down = False
 
@@ -196,6 +212,10 @@ class Player(Entity):
         self.get_status()
         self.move(self.speed)
 
+<<<<<<< HEAD
+        if self.shield_on:
+            self.shield.update()
+=======
         if self.shield != None:
             self.shield.update()
             self.shield_start = current_time
@@ -208,3 +228,4 @@ class Player(Entity):
                     self.shield = None
                     self.shield_down = False
                     self.shield_available = False
+>>>>>>> 427c7b8c29aeb2e5afd4d5fa48da95e55beb015a
