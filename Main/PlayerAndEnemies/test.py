@@ -1,4 +1,4 @@
-from game import Game
+from Main.arcademode import Game
 import pygame
 
 game = Game()
