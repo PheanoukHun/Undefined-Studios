@@ -72,8 +72,9 @@ class Level:
 
     def player_heal_logic(self):
         if self.healing_sprites:
-            for health_block in self.healing_sprites:
-                if self.player.rect.colliderect(health_block.rect):
+            collided_sprites = pygame.sprite.spritecollide(self.player, self.healing_sprites, False)
+            if collided_sprites:
+                for health_block in collided_sprites:
                     self.player.hp = self.player.data["Health"]
                     health_block.kill()
 
@@ -126,4 +127,5 @@ class Level:
         self.visible_sprites.enemy_update(self.player)
         self.player_attack_logic()
         self.mob_attack_logic()
+        self.player_heal_logic()
         self.ui.display(self.player)
