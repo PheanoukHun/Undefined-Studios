@@ -5,11 +5,14 @@ from PlayerAndEnemies.tile import Tile
 from PlayerAndEnemies.player import Player
 from Weapons.weapon import Slash, Shield
 from Weapons.ranged import FireBall, Arrows
+from Weapons.medkit import Medkit
 from Utilities.ui import UI
 from PlayerAndEnemies.enemy import Enemy
 from Utilities.camera import YSortCameraGroup
+from Utilities.debug import debug
 
 class Level:
+
     def __init__(self, levelnum = 1, player_character = "Knight"):
 
         self.screen = pygame.display.get_surface()
@@ -17,6 +20,8 @@ class Level:
         
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
+
+        self.healing_sprites = pygame.sprite.Group()
         
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
@@ -65,6 +70,13 @@ class Level:
         arrow = Arrows([self.visible_sprites, self.attack_sprites], pos, distance_sorted_list[0], self.obstacle_sprites)
         return arrow
 
+    def player_heal_logic(self):
+        if self.healing_sprites:
+            for health_block in self.healing_sprites:
+                if self.player.rect.colliderect(health_block.rect):
+                    self.player.hp = self.player.data["Health"]
+                    health_block.kill()
+
     def mob_arrow(self, pos):
         arrow = Arrows([self.visible_sprites, self.enemy_attack_sprites], pos, self.player, self.obstacle_sprites)
         return arrow
@@ -94,8 +106,10 @@ class Level:
                 x = xi * TILE_SIZE
                 y = yi * TILE_SIZE
 
-                if int(col) >= 0 and int(col) != 15 and int(col) != 16:
+                if int(col) >= 0 and int(col) != 15 and int(col) != 16 and int(col) != 19:
                     Tile((x,y), [self.obstacle_sprites, self.visible_sprites], int(col))
+                if int(col) == 19:
+                    Medkit(x, y, [self.visible_sprites, self.healing_sprites])
                 if int(col) == 16:
                     monster_types = ["Zombie", "Skeleton", "Slime"]
                     Enemy(random.choice(monster_types), (x, y), [self.visible_sprites, self.attackable_sprites]
