@@ -33,11 +33,20 @@ class Shield(pygame.sprite.Sprite):
     def __init__(self, player, groups):
         super().__init__(groups)
         self.player = player
+        
+        self.flip_x = True
+        self.flip_y = False
+
         self.image = pygame.transform.scale(pygame.image.load("OtherAssets\\AuraShield.png").convert_alpha(), (player.image.get_width() + 10, player.image.get_height() + 10))
         self.rect = self.image.get_rect(center = (player.rect.center))
         self.time_started = pygame.time.get_ticks()
     
     def update(self):
+
+        self.flip_x = not self.flip_x
+        self.flip_y = not self.flip_y
+
+        self.image = pygame.transform.flip(self.image, self.flip_x, self.flip_y)
         self.rect.center = self.player.rect.center
         current_time = pygame.time.get_ticks()
         if current_time - self.time_started > 5000 or "Attack" in self.player.state:

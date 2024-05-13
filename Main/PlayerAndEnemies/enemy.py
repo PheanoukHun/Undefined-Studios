@@ -4,50 +4,56 @@ import json
 from GameEngine.settings import *
 from PlayerAndEnemies.entity import Entity
 from PlayerAndEnemies.spritesheet import SpriteSheet
-from Weapons.projectile import ProjectilePlayer
 
 class Enemy(Entity):
-    def __init__(self, monster_type, pos, groups, obstacle_sprites, damage_player):
+    def __init__(self, monster_type, pos, groups, obstacle_sprites, damage_player, skeleton_shot):
+        
+        # Sprites Setup
         super().__init__(groups)
         self.monster_type = monster_type
         with open(f"MonsterAssets/{monster_type}/CharacterInfo.json") as file:
             self.data = json.load(file)
         self.sprite_type = "Mob"
 
+        # Projectile Group
+        self.arrows = pygame.sprite.Group()
+
+        # Stats Variable
         self.speed = self.data["VEL"]
         self.hp = self.data["Health"]
         self.damage = self.data["AttackDamage"]
-        self.notice_radius = 500
-        if self.monster_type == "Skeleton" : self.attack_radius = 500
-        else: self.attack_radius = 60
+        
+        self.notice_radius = 750
         self.resistance = self.data["Resistance"]
         
+        if self.monster_type == "Skeleton" :
+            self.attack_radius = 500
+        else:
+            self.attack_radius = 60
+
+        # Attack Variables
         self.can_attack = True
         self.attack_time = 0
-        self.cooldown_time = 400
         self.damage_player = damage_player
+        self.skeleton_shot = skeleton_shot
 
+        if self.monster_type != "Skeleton":
+            self.cooldown_time = 400
+        else:
+            self.cooldown_time = 800
+
+        # Vulnerability Variables
         self.invisibility_duration = 300
         self.vulnerable = True
         self.hit_time = None
 
+        # States and Positioning
         self.previous_state = None
         self.state = "Idle"
         self.image = pygame.Surface((self.data["Width"], self.data["Height"]))
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(-30, -30)
         self.walls = obstacle_sprites
-
-    def shoot_arrow(self, player, groups):
-        groups.append(self.projectiles)
-        if len(self.projectiles) < 4:
-            self.player = player
-            player_center = player.rect.center
-            mob_center = player.rect.center
-            difference = (player_center - mob_center)
-
-            angle = math.atan2(difference[1]/difference[0])
-            ProjectilePlayer(groups, "OtherAssets\ArrowSprite.png", 34, 6, angle, self.rect.midright, self.damage_player)
 
     def animate(self):
 
@@ -105,7 +111,7 @@ class Enemy(Entity):
         else:
             self.state = "Idle"
     
-    def actions(self, player, group):
+    def actions(self, player):
         if self.state == 'Attack':
             self.attack_time = pygame.time.get_ticks()
             self.direction = pygame.math.Vector2()
@@ -113,9 +119,11 @@ class Enemy(Entity):
                 if self.rect.colliderect(player.rect):
                     self.damage_player(self.damage)
                     self.can_attack = False
-                else:
-                    pass
-                    #self.shoot_arrow(self.player, group)
+            else:
+                if len(self.arrows) <= 4:
+                    arrow = self.skeleton_shot(self.rect.center)
+                    self.can_attack = False
+                    self.arrows.add(arrow)
 
         elif self.state == "Move":
             self.direction = self.get_player_distance_direction(player)[1]
@@ -148,22 +156,19 @@ class Enemy(Entity):
         if self.hp < 0:
             self.kill()
 
-    def target_player(self, player):
-        pass
-
     def update(self):
-        if self.projectiles:
-            self.projectiles.draw(pygame.display.get_surface())
         self.knockback()
         self.cooldown()
         self.animate()
         self.move(self.speed)
     
-    def enemy_update(self, player, group):
+    def enemy_update(self, player):
 
         self.player = player
-        if player.rect.x > self.rect.x: self.image = pygame.transform.flip(self.image.convert_alpha(), True, False)
-        else: self.image = pygame.transform.flip(self.image.convert_alpha(), False, False)
+        if player.rect.x > self.rect.x:
+            self.image = pygame.transform.flip(self.image.convert_alpha(), True, False)
+        else:
+            self.image = pygame.transform.flip(self.image.convert_alpha(), False, False)
 
         self.get_status(player)
-        self.actions(player, group)
+        self.actions(player)

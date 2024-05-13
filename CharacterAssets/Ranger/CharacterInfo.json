@@ -1,50 +1,34 @@
 {
-    "Health": 20,
-    "AttackDamage" : 7,
+    "Health": 100,
+    "AttackDamage" : 20,
+    "Resistance" : 3,
+    "AnimationSteps" : 5,
+    "AnimationSpeed" : 125,
+    "Width" : 128,
+    "Height" : 64,
+    "AttackHeight": 64,
+    "AttackWidth" : 64,
+    "AttackAnimationSteps" : 6,
+    "AttackAnimationSpeed" : 75,
     "VEL" : 5,
+    
+    "Up" : "CharacterAssets\\Ranger\\RangerWalkingUp.png",
+    "Down" : "CharacterAssets\\Ranger\\RangerWalkingDown.png",
+    "Right" : "CharacterAssets\\Ranger\\RangerWalkingRight.png",
+    "Left" : "CharacterAssets\\Ranger\\RangerWalkingLeft.png",
 
-    "Walking" : {
-        
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Ranger\\RangerWalkingUp.png",
-        "South" : "CharacterAssets\\Ranger\\RangerWalkingDown.png",
-        "East" : "CharacterAssets\\Ranger\\RangerWalkingRight.png",
-        "West" : "CharacterAssets\\Ranger\\RangerWalkingLeft.png"
-    },
+    "Up_Idle" : "CharacterAssets\\Ranger\\RangerWalkingUp.png",
+    "Down_Idle" : "CharacterAssets\\Ranger\\RangerWalkingDown.png",
+    "Right_Idle" : "CharacterAssets\\Ranger\\RangerWalkingRight.png",
+    "Left_Idle" : "CharacterAssets\\Ranger\\RangerWalkingLeft.png",
 
-    "Idle" : {
-        "AnimationSteps" : 1,
-        "AnimationSpeed": 250,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Ranger\\RangerWalkingUp.png",
-        "South" : "CharacterAssets\\Ranger\\RangerWalkingDown.png",
-        "East" : "CharacterAssets\\Ranger\\RangerWalkingRight.png",
-        "West" : "CharacterAssets\\Ranger\\RangerWalkingLeft.png"
-    },
+    "Up_Attack" : "CharacterAssets\\Ranger\\RangerShootingUp.png",
+    "Down_Attack" : "CharacterAssets\\Ranger\\RangerShootingDown.png",
+    "Right_Attack" : "CharacterAssets\\Ranger\\RangerShootingRight.png",
+    "Left_Attack" : "CharacterAssets\\Ranger\\RangerShootingLeft.png",
 
-    "Hurt" : {
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 140,
-        "North" : "CharacterAssets\\Ranger\\RangerDead.png",
-        "South" : "CharacterAssets\\Ranger\\RangerDead.png",
-        "East" : "CharacterAssets\\Ranger\\RangerDead.png",
-        "West" : "CharacterAssets\\Ranger\\RangerDead.png"
-    },
-
-    "Attack" : {
-        "AnimationSteps" : 6,
-        "AnimationSpeed": 125,
-        "Height" : 100,
-        "Width" : 188,
-        "North" : "CharacterAssets\\Ranger\\RangerShootingUp.png",
-        "South" : "CharacterAssets\\Ranger\\RangerShootingDown.png",
-        "East" : "CharacterAssets\\Ranger\\RangerShootingRight.png",
-        "West" : "CharacterAssets\\Ranger\\RangerShootingLeft.png"
-    }
+    "Up_Dead" : "CharacterAssets\\Ranger\\RangerDead.png",
+    "Down_Dead" : "CharacterAssets\\Ranger\\RangerDead.png",
+    "Right_Dead" : "CharacterAssets\\Ranger\\RangerDead.png",
+    "Left_Dead" : "CharacterAssets\\Ranger\\RangerDead.png"
 }

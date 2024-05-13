@@ -6,12 +6,11 @@ from PlayerAndEnemies.spritesheet import SpriteSheet
 
 
 class Player(Entity):
-    def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon, create_shield):
+    def __init__(self, position, groups, wall, player_type, create_attack, destroy_weapon, create_shield, wizard_attack, ranger_attack):
         
         super().__init__(groups)
         self.player_type = player_type
         self.sprite_type = "Player"
-        self.visible_sprite = groups[0]
 
         # Animation Data
 
@@ -19,7 +18,7 @@ class Player(Entity):
 
         #Image and Rect
 
-        self.image = pygame.transform.scale(pygame.image.load(f"CharacterAssets\{player_type}\{player_type}Single.png").convert_alpha(), (64, 64))
+        self.image = pygame.transform.scale(pygame.image.load(f"CharacterAssets/{player_type}/{player_type}Single.png").convert_alpha(), (64, 64))
         self.rect = self.image.get_rect(topleft = position)
         self.hitbox = self.rect.inflate(-50, -30)
 
@@ -38,12 +37,23 @@ class Player(Entity):
 
         #Attacks
 
+        ## General ##
         self.attacking = False
         self.attack_time = None
+        
+        ## Knight ##
         self.create_attack = create_attack
         self.destroy_weapon = destroy_weapon
+        
+        ## Wizard ##
+        self.wizard_attack = wizard_attack
+        self.fireball = None
 
-        # Damage Player
+        ## Ranger ##
+        self.ranger_attack = ranger_attack
+        self.arrows = pygame.sprite.Group()
+
+        # Damage to Player
 
         self.vulnerable = True
         self.hurt_time = None
@@ -76,7 +86,12 @@ class Player(Entity):
             if "Idle" in self.state:
                 self.animation_speed = 0
             elif "Attack" in self.state:
-                self.animation_speed = 0.25
+                if self.player_type == "Knight":
+                    self.animation_speed = 0.25
+                elif self.player_type == "Wizard":
+                    self.animation_speed = 0.09
+                else:
+                    self.animation_speed = 0.15
             else:
                 self.animation_speed = 0.15
 
@@ -109,11 +124,11 @@ class Player(Entity):
         self.speed = self.data["VEL"]
 
         if self.player_type == "Knight":
-            self.attack_cooldown = 400
+            self.attack_cooldown = 750
         elif self.player_type == "Ranger":
-            self.attack_cooldown = 800
+            self.attack_cooldown = 550
         else:
-            self.attack_cooldown = 1200
+            self.attack_cooldown = 3000
 
     # Change Player Status
 
@@ -168,8 +183,12 @@ class Player(Entity):
                 self.attack_time = pygame.time.get_ticks()
                 if self.player_type == "Knight":
                     self.create_attack()
+                elif self.player_type == "Wizard":
+                    self.wizard_attack()
                 else:
-                    self.shoot()
+                    if len(self.arrows) <= 5:
+                        arrow = self.ranger_attack(self.rect.center)
+                        self.arrows.add(arrow)
             
             # Shield Input
             if self.shield_available:
@@ -201,6 +220,3 @@ class Player(Entity):
         self.input()
         self.get_status()
         self.move(self.speed)
-
-        if self.shield_on:
-            self.shield.update()

@@ -1,50 +1,32 @@
 {
-    "Health": 20,
-    "AttackDamage" : 7,
+    "Health": 100,
+    "AttackDamage" : 20,
+    "Resistance" : 3,
+    "AnimationSteps" : 5,
+    "Width" : 64,
+    "Height" : 64,
+    "AttackHeight": 80,
+    "AttackWidth" : 64,
+    "AttackAnimationSteps" : 6,
     "VEL" : 5,
+    
+    "Up" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
+    "Down" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
+    "Right" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
+    "Left" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png",
 
-    "Walking" : {
-        
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
-        "South" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
-        "East" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
-        "West" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png"
-    },
+    "Up_Idle" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
+    "Down_Idle" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
+    "Right_Idle" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
+    "Left_Idle" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png",
 
-    "Idle" : {
-        "AnimationSteps" : 1,
-        "AnimationSpeed": 250,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Wizard\\WizardWalkingUp.png",
-        "South" : "CharacterAssets\\Wizard\\WizardWalkingDown.png",
-        "East" : "CharacterAssets\\Wizard\\WizardWalkingRight.png",
-        "West" : "CharacterAssets\\Wizard\\WizardWalkingLeft.png"
-    },
+    "Up_Attack" : "CharacterAssets\\Wizard\\WizardMagicUp.png",
+    "Down_Attack" : "CharacterAssets\\Wizard\\WizardMagicDown.png",
+    "Right_Attack" : "CharacterAssets\\Wizard\\WizardMagicRight.png",
+    "Left_Attack" : "CharacterAssets\\Wizard\\WizardMagicLeft.png",
 
-    "Hurt" : {
-        "AnimationSteps" : 5,
-        "AnimationSpeed": 125,
-        "Height" : 64,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Wizard\\WizardDead.png",
-        "South" : "CharacterAssets\\Wizard\\WizardDead.png",
-        "East" : "CharacterAssets\\Wizard\\WizardDead.png",
-        "West" : "CharacterAssets\\Wizard\\WizardDead.png"
-    },
-
-    "Attack" : {
-        "AnimationSteps" : 6,
-        "AnimationSpeed": 125,
-        "Height" : 100,
-        "Width" : 64,
-        "North" : "CharacterAssets\\Wizard\\WizardMagicUp.png",
-        "South" : "CharacterAssets\\Wizard\\WizardMagicDown.png",
-        "East" : "CharacterAssets\\Wizard\\WizardMagicRight.png",
-        "West" : "CharacterAssets\\Wizard\\WizardMagicLeft.png"
-    }
+    "Up_Dead" : "CharacterAssets\\Wizard\\WizardDead.png",
+    "Down_Dead" : "CharacterAssets\\Wizard\\WizardDead.png",
+    "Right_Dead" : "CharacterAssets\\Wizard\\WizardDead.png",
+    "Left_Dead" : "CharacterAssets\\Wizard\\WizardDead.png"
 }

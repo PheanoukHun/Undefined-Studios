@@ -4,6 +4,7 @@ from GameEngine.settings import *
 from PlayerAndEnemies.tile import Tile
 from PlayerAndEnemies.player import Player
 from Weapons.weapon import Slash, Shield
+from Weapons.ranged import FireBall, Arrows
 from Utilities.ui import UI
 from PlayerAndEnemies.enemy import Enemy
 from Utilities.camera import YSortCameraGroup
@@ -48,18 +49,25 @@ class Level:
             self.player.hp -= amount
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
-            print(self.player.hp)
-            print(self.player.shield)
 
     def create_attack(self):
         self.current_attack = Slash(self.player, [self.visible_sprites, self.attack_sprites])
 
-    """def player_shoot(self):
-        if self.player.player_type == "Wizard":
-            self.projectiles.flame(self.player, [self.attack_sprites, self.player.projectiles])
-        if self.player.player_type == "Ranger":
-            self.projectiles.arrow(self.player, [self.attack_sprites])
-"""
+    def create_fireball(self):
+        self.current_attack = FireBall(self.player, [self.visible_sprites, self.attack_sprites])
+
+    def player_arrow(self, pos):
+
+        distance_sorted_list = []
+        for sprite in sorted(self.attackable_sprites, key = lambda sprite: sprite.distance):
+            distance_sorted_list.append(sprite)
+
+        arrow = Arrows([self.visible_sprites, self.attack_sprites], pos, distance_sorted_list[0], self.obstacle_sprites)
+        return arrow
+
+    def mob_arrow(self, pos):
+        arrow = Arrows([self.visible_sprites, self.enemy_attack_sprites], pos, self.player, self.obstacle_sprites)
+        return arrow
 
     def shield(self):
         shield = Shield(self.player, [self.visible_sprites])
@@ -74,10 +82,10 @@ class Level:
         if self.enemy_attack_sprites:
             for attack_sprite in self.enemy_attack_sprites:
                 if attack_sprite.rect.colliderect(self.player.rect):
-                    collided_sprites = pygame.sprite.spritecollide(attack_sprite.rect, self.player.rect)
+                    collided_sprites = pygame.sprite.spritecollide(self.player, self.enemy_attack_sprites, False)
                     if collided_sprites:
                         for target_sprite in collided_sprites:
-                            attack_sprite.hit()
+                            self.damage_player(5)
                             attack_sprite.kill()
 
     def create_map(self):
@@ -91,15 +99,17 @@ class Level:
                 if int(col) == 16:
                     monster_types = ["Zombie", "Skeleton", "Slime"]
                     Enemy(random.choice(monster_types), (x, y), [self.visible_sprites, self.attackable_sprites]
-                        , self.obstacle_sprites, self.damage_player)
+                        , self.obstacle_sprites, self.damage_player, self.mob_arrow)
                 if int(col) == 15:
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites,
-                                        self.player_type, self.create_attack, self.destroy_weapon, self.shield)
+                                        self.player_type, self.create_attack,
+                                        self.destroy_weapon, self.shield,
+                                        self.create_fireball, self.player_arrow)
     
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player, [self.enemy_attack_sprites])
+        self.visible_sprites.enemy_update(self.player)
         self.player_attack_logic()
         self.mob_attack_logic()
         self.ui.display(self.player)
