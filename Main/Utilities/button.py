@@ -1,8 +1,13 @@
+# Library Import
 import pygame
 
+# Pygame Initialization
 pygame.init()
 
+# Button Class
 class Button():
+
+    # Initialization Function
     def __init__(self, x, y, image):
         self.x = x
         self.y = y
@@ -17,15 +22,7 @@ class Button():
 
         self.clicked = False
 
-    def scale(self, number):
-
-        self.width = int(self.width * number)
-        self.height = int(number * self.height)
-        
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (self.x, self.y)
-
+    # Draws the Button and Checks for the Button is Pressed or not
     def draw(self, window):
         pos = pygame.mouse.get_pos()
         action = False

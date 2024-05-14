@@ -1,9 +1,12 @@
+# Libary Import
 import pygame
 import math
 from GameEngine.settings import *
 from PlayerAndEnemies.spritesheet import SpriteSheet
 
+# Arrow Class
 class Arrows(pygame.sprite.Sprite):
+    # Initialization Function
     def __init__(self, groups, pos, target, walls):
         
         # Sprite Setup
@@ -33,16 +36,19 @@ class Arrows(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.image, angle)
         self.rect = self.image.get_rect(center = self.rect.center)
     
+    # Updates the Arrow's Position amd Wall Collision
     def update(self):
 
         for wall in self.walls:
-            if self.rect.colliderect(wall.rect):
+            if self.rect.colliderect(wall.hitbox):
                 self.kill()
 
         self.rect.x += self.direction.x * self.speed
         self.rect.y += self.direction.y * self.speed
 
+# Fireball Class for the Wizard
 class FireBall(pygame.sprite.Sprite):
+    # Initialization Function
     def __init__(self, player, groups):
         super().__init__(groups)
         self.player = player
@@ -56,20 +62,20 @@ class FireBall(pygame.sprite.Sprite):
         self.time_started = pygame.time.get_ticks()
         self.animation_speed = 0.35
     
+    # Update the Frame of the Fireball Ring
     def update_frame(self):
         self.frame_index += self.animation_speed
         self.scale += 0.4
         self.rect = self.image.get_rect(center = self.player.rect.center)
         self.image = self.spritesheet.get_image(int(self.frame_index), 20,
                                                 22, self.scale, (0, 0, 0))
-        
+    
+    # Update the Fireball Position and the Radius of the Fireball
     def update(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.time_started > 1000:
+            self.player.attacking = False
             self.player.fireball = None
             self.kill()
-
-            self.player.attacking = False
-
         else:
             self.update_frame()

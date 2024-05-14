@@ -1,8 +1,11 @@
+# Library Import
 import pygame
 
+# Camera Class
 class YSortCameraGroup(pygame.sprite.Group):
+    
+    # Initialization Function
     def __init__(self):
-
         # General Setup
         super().__init__()
         self.screen = pygame.display.get_surface()
@@ -13,6 +16,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.background = pygame.transform.scale(pygame.image.load("Background/StoneBackground.png").convert(), (5000, 5000))
         self.background_rect = self.background.get_rect(topleft = (0,0))
 
+    # Draw Function that Shows the Whole map moving so that the player is always at the center of the map.
     def custom_draw(self, player):
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
@@ -24,6 +28,7 @@ class YSortCameraGroup(pygame.sprite.Group):
             offset_position = sprite.rect.topleft - self.offset
             self.screen.blit(sprite.image, offset_position)
     
+    # Enemy Update Function to Help Track the Player
     def enemy_update(self, player):
         enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, "sprite_type") and sprite.sprite_type == "Mob"]
         for enemy in enemy_sprites:

@@ -1,6 +1,6 @@
 {
     "Health": 150,
-    "AttackDamage": 10,
+    "AttackDamage": 15,
     "Resistance": 1,
     "AnimationSteps": 5,
     "AnimationSpeed": 125,

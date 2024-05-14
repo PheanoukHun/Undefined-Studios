@@ -1,7 +1,10 @@
+# Pygame Info and Libary Import
 import pygame
 from GameEngine.settings import *
 
+# Medkit Class
 class Medkit(pygame.sprite.Sprite):
+    # Initialization Function
     def __init__(self, x, y, groups):
         super().__init__(groups)
         self.sprite_type = "Healing"

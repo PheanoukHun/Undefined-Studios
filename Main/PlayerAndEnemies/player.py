@@ -11,6 +11,7 @@ class Player(Entity):
         super().__init__(groups)
         self.player_type = player_type
         self.sprite_type = "Player"
+        self.score = 0
 
         # Animation Data
 

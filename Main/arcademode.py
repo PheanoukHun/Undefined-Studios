@@ -6,6 +6,7 @@ from GameEngine.level import Level
 from GameEngine.settings import *
 from Utilities.button import Button
 from Utilities.debug import debug
+from Utilities.ui import score_display
 
 # Game Class
 class Game:
@@ -49,7 +50,11 @@ class Game:
             levelnum (int): Number of the level.
             player_character (str): Type of player character.
         """
+
+        transition(pygame.time.get_ticks(), f"Level {levelnum}")
         self.level = Level(levelnum, player_character)
+        self.levelnum = levelnum
+        self.player_character = player_character
 
     def run(self):
         """
@@ -59,17 +64,26 @@ class Game:
             bool: True if the game is won, False if the game is over.
         """
         while True:
+
+            # Event Handling
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+                # Pause Function
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        self.pause = True
+                        if self.pause:
+                            self.pause = False
+                        else:
+                            self.pause = True
             
+            # Screen Display
             self.screen.fill(color_constants["Black"])
             if not self.pause:
                 self.level.run()
+                score_display(self.level.player.score * 5)
             else:
                 if self.exit_button.draw(self.screen):
                     pygame.quit()
@@ -77,13 +91,66 @@ class Game:
                 if self.resume_button.draw(self.screen):
                     self.pause = False
 
+            # Screen Updating
             pygame.display.update()
             self.clock.tick(FPS)
 
+            # Level Transition
             if self.level.player.hp <= 0:
                 return False
             if len(self.level.attackable_sprites) == 0:
-                return True
+                self.levelnum += 1
+                if self.levelnum == 5:
+                    return True
+                elif self.levelnum == 4:
+                    current_hp = self.level.player.hp
+                    current_score = self.level.player.score
+                    
+                    transition(pygame.time.get_ticks(), "Boss Level")
+                    self.level = Level(self.levelnum, self.player_character)
+
+                    self.level.player.score = current_score
+                    self.level.player.hp = current_hp
+                else:
+                    current_hp = self.level.player.hp
+                    current_score = self.level.player.score
+                    
+                    transition(pygame.time.get_ticks(), f"Level {self.levelnum}")
+                    self.level = Level(self.levelnum, self.player_character)
+
+                    self.level.player.score = current_score
+                    self.level.player.hp = current_hp
+
+# Transition Screen In between the Level
+def transition(text):
+
+    # Graphics Window
+    screen = pygame.display.get_surface()
+
+    # Text Display Setup
+    font = pygame.font.SysFont("Arial", 100)
+    text = font.render(text, True, (255, 255, 255))
+    text_rect = text.get_rect(center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+
+    # Time
+    start_time = pygame.time.get_ticks()
+    current_time = pygame.time.get_ticks()
+    while current_time - start_time < 50:
+        
+        # Event Handler
+        current_time = pygame.time.get_ticks()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        # Screen Fill
+        screen.fill((0, 0, 0))
+        screen.blit(text, text_rect)
+
+        # Screen Update
+        game.clock.tick(FPS)
+        pygame.display.update()
 
 # Menu1 Function
 def menu1():
@@ -270,21 +337,44 @@ def results(text):
     Args:
         text (str): Text to be displayed.
     """
+
+    # Fonts
     font = pygame.font.SysFont("Arial", 100)
-    text = font.render(text, True, (255, 255, 255))
-    text_rect = text.get_rect(center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    score_font = pygame.font.SysFont(None, 50)
     
+    # Render Fonts
+    text = font.render(text, True, (255, 255, 255))
+    score_text = score_font.render(f"Score: {game.level.player.score * 5}", True, color_constants["Black"])
+    
+    # Text Rects
+    text_rect = text.get_rect(center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+    score_rect = score_text.get_rect(midtop = text_rect.midbottom)
+
+    #Time
+    start_time = pygame.time.get_ticks()
+
     while True:
+        current_time = pygame.time.get_ticks()
+        
+        # Event Handler
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
         
+        # Screen Display
         game.screen.fill(color_constants["Black"])
         game.screen.blit(text, text_rect)
+        game.screen.blit(score_text, score_rect)
         
+        # Display Update
         game.clock.tick(FPS)
         pygame.display.update()
+
+        # Timer
+        if current_time - start_time > 10000:
+            pygame.quit()
+            sys.exit()
 
 # Main Game if This is the main function
 if __name__ == "__main__":

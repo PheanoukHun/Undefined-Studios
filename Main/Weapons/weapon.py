@@ -1,6 +1,9 @@
+# Importing Libraries
 import pygame
 
+# Slash Class
 class Slash(pygame.sprite.Sprite):
+    # Initialization Function
     def __init__(self, player, groups):
         super().__init__(groups)
         self.sprite_type = "Melee"
@@ -29,7 +32,9 @@ class Slash(pygame.sprite.Sprite):
         else:
             self.rect = self.image.get_rect(topleft = player.rect.bottomleft + pygame.math.Vector2(0, -50))
 
+# Shield Class
 class Shield(pygame.sprite.Sprite):
+    # Initialization Function
     def __init__(self, player, groups):
         super().__init__(groups)
         self.player = player
@@ -41,6 +46,7 @@ class Shield(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = (player.rect.center))
         self.time_started = pygame.time.get_ticks()
     
+    # Updates the Animation and Checks if the Shield Should be destroyed or not
     def update(self):
 
         self.flip_x = not self.flip_x

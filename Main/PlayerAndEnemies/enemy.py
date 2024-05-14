@@ -1,3 +1,4 @@
+# Importing Libraries
 import pygame
 import math
 import json
@@ -5,6 +6,7 @@ from GameEngine.settings import *
 from PlayerAndEnemies.entity import Entity
 from PlayerAndEnemies.spritesheet import SpriteSheet
 
+# Enemy Classes
 class Enemy(Entity):
     def __init__(self, monster_type, pos, groups, obstacle_sprites, damage_player, skeleton_shot):
         
@@ -22,10 +24,10 @@ class Enemy(Entity):
         self.speed = self.data["VEL"]
         self.hp = self.data["Health"]
         self.damage = self.data["AttackDamage"]
-        
-        self.notice_radius = 750
         self.resistance = self.data["Resistance"]
         
+        # Notice and Attack Radius
+        self.notice_radius = 750
         if self.monster_type == "Skeleton" :
             self.attack_radius = 500
         else:
@@ -55,44 +57,45 @@ class Enemy(Entity):
         self.hitbox = self.rect.inflate(-30, -30)
         self.walls = obstacle_sprites
 
+    # Enemy Animation
     def animate(self):
 
-        #loop over to next frame index
-
+        #Loop over to next frame index
         self.frame_index += self.animation_speed
         if self.frame_index >= self.data["AnimationSteps"]:
             if self.state == "Attack":
                 self.frame_index = 0
-        
             self.frame_index = 0
 
         # Set the Image
-
         if self.state != self.previous_state:
             self.previous_state = self.state
             self.sprite_sheet = SpriteSheet(self.data[self.state])
             self.frame_index = 0
 
+        # Image Size
         height = self.data["Height"]
         width = self.data["Width"]
 
         self.image = self.sprite_sheet.get_image(int(self.frame_index), width, height, 1, (0, 0, 0))
 
         #Flicker Logic
-
         if not self.vulnerable:
             alpha = self.wave_value()
             self.image.set_alpha(alpha)
         else:
             self.image.set_alpha(255)
 
+    # Player Tracking
     def get_player_distance_direction(self, player):
 
+        # Finding Coordinate Differences
         enemy_vec = pygame.math.Vector2(self.rect.center)
         player_vec = pygame.math.Vector2(player.rect.center)
         diff = (player_vec - enemy_vec)
         distance = diff.magnitude()
 
+        # Finding the Direction
         if distance > 0:
             direction = diff.normalize()
         else:
@@ -100,6 +103,7 @@ class Enemy(Entity):
 
         return (distance, direction)
 
+    # Change the State of the Mob
     def get_status(self, player):
 
         self.distance = self.get_player_distance_direction(player)[0]
@@ -111,10 +115,14 @@ class Enemy(Entity):
         else:
             self.state = "Idle"
     
+    # Use the Mob's State to Perform Different Actions
     def actions(self, player):
+
         if self.state == 'Attack':
             self.attack_time = pygame.time.get_ticks()
             self.direction = pygame.math.Vector2()
+            self.animation_speed = 0.15
+
             if self.monster_type != "Skeleton":
                 if self.rect.colliderect(player.rect):
                     self.damage_player(self.damage)
@@ -127,10 +135,14 @@ class Enemy(Entity):
 
         elif self.state == "Move":
             self.direction = self.get_player_distance_direction(player)[1]
+            self.animation_speed = 0.15
         else:
             self.direction = pygame.math.Vector2()
+            self.animation_speed = 0
 
+    # Cooldowns for Attack and Vulnerability Periods
     def cooldown(self):
+
         current_time = pygame.time.get_ticks()
         if not self.can_attack:
             if current_time - self.attack_time > self.cooldown_time:
@@ -139,6 +151,7 @@ class Enemy(Entity):
             if current_time - self.hit_time > self.invisibility_duration:
                 self.vulnerable = True
 
+    # The function used to Damage the Mob
     def get_damaged(self, player):
         if self.vulnerable:
             self.direction = self.get_player_distance_direction(player)[1]
@@ -148,20 +161,25 @@ class Enemy(Entity):
             self.vulnerable = False
             self.hit_time = pygame.time.get_ticks()
 
+    # Function to Calculate the Knockback Value of the Mob
     def knockback(self):
         if not self.vulnerable:
             self.direction *= -self.resistance
 
+    # Checks for the Death Condition of the Mob
     def check_death(self):
         if self.hp < 0:
+            self.player.score += 1
             self.kill()
 
+    # Update the Mob
     def update(self):
         self.knockback()
         self.cooldown()
         self.animate()
         self.move(self.speed)
     
+    # Update the Mob's Tracking for the Player
     def enemy_update(self, player):
 
         self.player = player
