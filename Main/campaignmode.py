@@ -51,7 +51,7 @@ class Game:
             player_character (str): Type of player character.
         """
 
-        transition(pygame.time.get_ticks(), f"Level {levelnum}")
+        transition(f"Level {levelnum}")
         self.level = Level(levelnum, player_character)
         self.levelnum = levelnum
         self.player_character = player_character
@@ -106,7 +106,7 @@ class Game:
                     current_hp = self.level.player.hp
                     current_score = self.level.player.score
                     
-                    transition(pygame.time.get_ticks(), "Boss Level")
+                    transition("Boss Level")
                     self.level = Level(self.levelnum, self.player_character)
 
                     self.level.player.score = current_score
@@ -115,7 +115,7 @@ class Game:
                     current_hp = self.level.player.hp
                     current_score = self.level.player.score
                     
-                    transition(pygame.time.get_ticks(), f"Level {self.levelnum}")
+                    transition(f"Level {self.levelnum}")
                     self.level = Level(self.levelnum, self.player_character)
 
                     self.level.player.score = current_score

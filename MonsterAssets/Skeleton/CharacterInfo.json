@@ -4,7 +4,7 @@
     "Resistance": 3,
     "AnimationSteps": 5,
     "AnimationSpeed": 125,
-    "Width": 64,
+    "Width": 128,
     "Height": 64,
     "AttackHeight": 64,
     "AttackWidth": 64,
@@ -13,5 +13,5 @@
 
     "Idle": "MonsterAssets\\Skeleton\\SkeletonWalkingLeft.png",
     "Move": "MonsterAssets\\Skeleton\\SkeletonWalkingLeft.png",
-    "Attack": "MonsterAssets\\Skeleton\\SkeletonShootingLeft.png"
+    "Attack": "MonsterAssets\\Skeleton\\SkeletonWalkingLeft.png"
 }
