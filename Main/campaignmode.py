@@ -51,7 +51,7 @@ class Game:
             player_character (str): Type of player character.
         """
 
-        transition(f"Level {levelnum}")
+        transition(f"Level {levelnum + 1}")
         self.level = Level(levelnum, player_character)
         self.levelnum = levelnum
         self.player_character = player_character
@@ -103,23 +103,19 @@ class Game:
                 if self.levelnum == 5:
                     return True
                 elif self.levelnum == 4:
-                    current_hp = self.level.player.hp
                     current_score = self.level.player.score
                     
                     transition("Boss Level")
                     self.level = Level(self.levelnum, self.player_character)
 
                     self.level.player.score = current_score
-                    self.level.player.hp = current_hp
                 else:
-                    current_hp = self.level.player.hp
                     current_score = self.level.player.score
                     
-                    transition(f"Level {self.levelnum}")
+                    transition(f"Level {self.levelnum + 1}")
                     self.level = Level(self.levelnum, self.player_character)
 
                     self.level.player.score = current_score
-                    self.level.player.hp = current_hp
 
 # Transition Screen In between the Level
 def transition(text):
@@ -242,6 +238,7 @@ def menu1():
         game.clock.tick(FPS)
         pygame.display.update()
 
+# Menu2 Function
 def menu2():
     """
     Second menu screen for selecting player character.
@@ -306,6 +303,10 @@ def results(text):
     # Text Rects
     text_rect = text.get_rect(center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     score_rect = score_text.get_rect(midtop = text_rect.midbottom)
+
+    # Scores Printed
+    print("Congratulations!")
+    print(f"You got: {game.level.player.score * 5}")
 
     #Time
     start_time = pygame.time.get_ticks()

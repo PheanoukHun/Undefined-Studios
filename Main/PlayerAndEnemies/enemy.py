@@ -190,3 +190,17 @@ class Enemy(Entity):
 
         self.get_status(player)
         self.actions(player)
+
+# Boss Class, just a scaled up enemy class
+class Boss(Enemy):
+    def __init__(self, pos, groups, obstacle_sprites, damage_player):
+        super().__init__("Cyclops", pos, groups, obstacle_sprites, damage_player, None)
+    
+    def check_death(self):
+        if self.hp < 0:
+            self.player.score += 20
+            self.kill()
+
+    def update(self):
+        super().update()
+        self.scale(2)

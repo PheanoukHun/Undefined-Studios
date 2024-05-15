@@ -1,17 +1,17 @@
 {
-    "Health": 150,
+    "Health": 500,
     "AttackDamage": 15,
-    "Resistance": 1,
+    "Resistance": 0,
     "AnimationSteps": 5,
     "AnimationSpeed": 125,
-    "Width": 128,
-    "Height": 128,
+    "Width": 64,
+    "Height": 66,
     "AttackHeight": 128,
     "AttackWidth": 128,
     "AttackAnimationSteps": 6,
     "VEL": 1,
 
-    "Idle": "MonsterAssets\\Boss\\Cyclops\\CyclopsWalkingLeft.png",
-    "Move": "MonsterAssets\\Boss\\Cyclops\\CyclopsWalkingLeft.png",
-    "Attack": "MonsterAssets\\Boss\\Cyclops\\CyclopsAttackLeft.png"
+    "Idle": "MonsterAssets\\Cyclops\\CyclopsWalkingLeft.png",
+    "Move": "MonsterAssets\\Cyclops\\CyclopsWalkingLeft.png",
+    "Attack": "MonsterAssets\\Cyclops\\CyclopsAttackLeft.png"
 }

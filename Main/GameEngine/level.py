@@ -9,7 +9,7 @@ from Weapons.weapon import Slash, Shield
 from Weapons.ranged import FireBall, Arrows
 from Weapons.medkit import Medkit
 from Utilities.ui import UI
-from PlayerAndEnemies.enemy import Enemy
+from PlayerAndEnemies.enemy import Enemy, Boss
 from Utilities.camera import YSortCameraGroup
 from Utilities.debug import debug
 
@@ -126,13 +126,12 @@ class Level:
                 x = xi * TILE_SIZE
                 y = yi * TILE_SIZE
 
-                if int(col) >= 0 and int(col) != 15 and int(col) != 16 and int(col) != 19 and int(col) != 11:
+                if int(col) >= 0 and int(col) != 15 and int(col) != 16 and int(col) != 19 and int(col) != 10:
                     Tile((x,y), [self.obstacle_sprites, self.visible_sprites], int(col))
                 if int(col) == 19:
                     Medkit(x, y, [self.visible_sprites, self.healing_sprites])
-                if int(col) == 11:
-                    Enemy("Cyclops", (x, y), [self.visible_sprites, self.attackable_sprites],
-                        self.obstacle_sprites, self.damage_player, self.mob_arrow)
+                if int(col) == 10:
+                    Boss((x, y), [self.visible_sprites, self.attackable_sprites], self.obstacle_sprites, self.damage_player)
                 if int(col) == 16:
                     monster_types = ["Zombie", "Skeleton", "Slime"]
                     Enemy(random.choice(monster_types), (x, y), [self.visible_sprites, self.attackable_sprites]
