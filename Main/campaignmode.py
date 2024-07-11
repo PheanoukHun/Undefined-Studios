@@ -51,7 +51,7 @@ class Game:
             player_character (str): Type of player character.
         """
 
-        transition(f"Level {levelnum + 1}")
+        transition(f"Level {levelnum}")
         self.level = Level(levelnum, player_character)
         self.levelnum = levelnum
         self.player_character = player_character
@@ -112,7 +112,7 @@ class Game:
                 else:
                     current_score = self.level.player.score
                     
-                    transition(f"Level {self.levelnum + 1}")
+                    transition(f"Level {self.levelnum}")
                     self.level = Level(self.levelnum, self.player_character)
 
                     self.level.player.score = current_score

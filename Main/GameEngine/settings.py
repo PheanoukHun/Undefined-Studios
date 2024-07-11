@@ -51,7 +51,7 @@ def blit_text(surface, width, text, pos, font, color=pygame.Color('black')):
         y += word_height  # Start on new row.
 
 # Level Creation and Level Num
-levelnum = 0
+levelnum = 1
 
 def read_world_data(levelnum):
     world_data = []
